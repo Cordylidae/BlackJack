@@ -1,7 +1,5 @@
 #include"Game.h"
-
-SDL_Texture* tableTex;
-SDL_Rect scrR, destR;
+#include"TextureManager.h"
 
 Game::Game(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
 {
@@ -21,6 +19,8 @@ Game::Game(const char* title, int xpos, int ypos, int width, int height, bool fu
 			std::cout << "Window created!" << std::endl;
 		}
 
+		
+
 		renderer = SDL_CreateRenderer(window, -1, 0);
 		if (renderer)
 		{
@@ -34,9 +34,8 @@ Game::Game(const char* title, int xpos, int ypos, int width, int height, bool fu
 		isRunning = false;
 	}
 
-	SDL_Surface* tmpSurface = IMG_Load("assets/table.png");
-	tableTex = SDL_CreateTextureFromSurface(renderer, tmpSurface);
-	SDL_FreeSurface(tmpSurface);
+	blackJack = std::make_unique<BlackJack>(renderer);
+	
 }
 Game::~Game() 
 {
@@ -65,17 +64,14 @@ void Game::handleEvents()
 
 void Game::update() 
 {
-	destR.h = 400;
-	destR.w = 600;
+	blackJack->Update();
 }
 
 void Game::render() 
 {
 	SDL_RenderClear(renderer);
 
-	SDL_RenderCopy(renderer, tableTex, NULL, NULL);
+	blackJack->Render();
 
 	SDL_RenderPresent(renderer);
 }
-
-
