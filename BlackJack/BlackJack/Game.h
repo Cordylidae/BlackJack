@@ -13,7 +13,7 @@ private:
 	std::unique_ptr<BlackJack> blackJack;
 
 public:
-	Game(const char* title = "noname", int xpos = SDL_WINDOWPOS_CENTERED, int ypos = SDL_WINDOWPOS_CENTERED, int width = 800, int height = 600, bool fullscreen = false);
+	Game(const char* title = "Black Jack", int xpos = SDL_WINDOWPOS_CENTERED, int ypos = SDL_WINDOWPOS_CENTERED, int width = 800, int height = 600, bool fullscreen = false);
 	~Game();
 
 	

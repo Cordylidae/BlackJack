@@ -37,6 +37,7 @@ Game::Game(const char* title, int xpos, int ypos, int width, int height, bool fu
 	blackJack = std::make_unique<BlackJack>(renderer);
 	
 }
+
 Game::~Game() 
 {
 	SDL_DestroyWindow(window);

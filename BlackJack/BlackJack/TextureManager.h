@@ -9,7 +9,7 @@ private:
 	
 public:
 	static SDL_Texture* LoadImage(std::string file, SDL_Renderer* rend);
-	static void ApplySurface(int x, int y, SDL_Texture* tex, SDL_Renderer* rend);
+	static void ApplySurface(double x, double y, SDL_Texture* tex, SDL_Renderer* rend);
 
 };
 

@@ -25,7 +25,7 @@ SDL_Texture* TextureManager::LoadImage(std::string file, SDL_Renderer* rend)
 	return texture;
 }
 
-void TextureManager::ApplySurface(int x, int y, SDL_Texture* tex, SDL_Renderer* rend) {
+void TextureManager::ApplySurface(double x, double y, SDL_Texture* tex, SDL_Renderer* rend) {
 	SDL_Rect pos;
 	pos.x = x;
 	pos.y = y;
