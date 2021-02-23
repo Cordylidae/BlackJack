@@ -6,6 +6,7 @@
 //#include"SDL.h"
 //#include"SDL_image.h"
 #include"Card.h"
+#include"Deck.h"
 
 class BlackJack
 {
@@ -17,7 +18,7 @@ private:
 	//SDL_Texture;
 	SDL_Renderer* renderer;
 	//Player* player;
-	//Deck* deck;
+	Deck* deck;
 	Card* card;
 
 public:

@@ -21,7 +21,7 @@ private:
 	SDL_Renderer* renderer;
 
 public:
-	Card(std::string namePath, SDL_Renderer* rend);
+	Card(std::string namePath, SDL_Renderer* rend,double x=0, double y=0);
 	~Card();
 
 	void Render();

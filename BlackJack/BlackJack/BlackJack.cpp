@@ -6,12 +6,13 @@ BlackJack::BlackJack(SDL_Renderer* rend)
 	renderer = rend;
 
 	background = TextureManager::LoadImage("assets/table.png", rend);
-	card = new Card("assets/Cards/Pika9.png", rend);
+	deck = new Deck(rend);
+	//card = new Card("assets/Cards/Pika9.png", rend);
 }
 
 BlackJack::~BlackJack()
 {
-	delete card;
+	delete deck;
 	SDL_DestroyTexture(background);
 	
 	std::cout << "Black_Jack Cleaned" << std::endl;
@@ -19,7 +20,8 @@ BlackJack::~BlackJack()
 
 void BlackJack::Update()
 {
-	card->Update();
+	//card->Update();
+	deck->Update();
 }
 
 void BlackJack::Render()
@@ -27,7 +29,6 @@ void BlackJack::Render()
 
 	SDL_RenderCopy(renderer, background, NULL, NULL);
 	
-	card->Render();
-
-
+	//card->Render();
+	deck->Render();
 }
