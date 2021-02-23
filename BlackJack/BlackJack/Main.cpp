@@ -4,6 +4,8 @@
 
 int main(int argc, char* argv[])
 {
+	srand(SDL_GetTicks());
+
 	std::unique_ptr<Game> game;
 	
 	game = std::make_unique<Game>("Black Jack v.0.1");

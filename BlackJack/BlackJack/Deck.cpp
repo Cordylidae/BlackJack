@@ -1,5 +1,7 @@
 #include"Deck.h"
 #include"TextureManager.h"
+#include<algorithm>
+#include<thread>
 
 Deck::Deck(SDL_Renderer* rend)
 {
@@ -10,7 +12,7 @@ Deck::Deck(SDL_Renderer* rend)
 	for (int i = 0; i < 4; i++) {
 		for (int j = 1; j < 14; j++)
 		{
-			std::string path = "assets/Cards/";
+			std::string path = "assets/Cards/"; int score = 10; bool isAce = false;
 
 			switch (i)
 			{
@@ -31,7 +33,11 @@ Deck::Deck(SDL_Renderer* rend)
 			switch (j)
 			{
 			case 1:
+			{
 				path += "Ace";
+				score += 1;
+				isAce = true;
+			}
 				break;
 			case 10:
 				path += "10";
@@ -49,13 +55,16 @@ Deck::Deck(SDL_Renderer* rend)
 			{
 				char digit = j + '0';
 				path += digit;
-				
-			}break;
+				score = j;
+			}
+				break;
 			}
 
-			card = std::make_shared<Card>(path + ".png", rend, j * 30, i * 120);
+			card = std::make_shared<Card>(path + ".png", rend,score, sin(SDL_GetTicks())*5.0 + 10, cos(SDL_GetTicks())*5.0 + 10, isAce);
 			cards.push_back(card);
 		}
+
+		std::random_shuffle(cards.begin(),cards.end());
 	}
 }
 
@@ -71,6 +80,8 @@ void Deck::Update()
 {
 	//xpos = sin(M_PI * SDL_GetTicks() / 1000.0)*100.0 + 250;
 	//ypos = cos(M_PI * SDL_GetTicks() / 1000.0)*100.0 + 250;
+	
+
 	for (int i = 0; i < cards.size(); i++) {
 		cards[i]->Update();
 	}

@@ -61,11 +61,21 @@ void Game::handleEvents()
 		default:
 			break;
 	}
+
+	switch (event.key.keysym.sym)
+	{
+	case SDLK_SPACE:
+		blackJack->Update();
+		break;
+
+	default:
+		break;
+	}
 }
 
 void Game::update() 
 {
-	blackJack->Update();
+	
 }
 
 void Game::render() 
