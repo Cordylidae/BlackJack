@@ -18,17 +18,17 @@ BlackJack::~BlackJack()
 	std::cout << "Black_Jack Cleaned" << std::endl;
 }
 
-void BlackJack::Update()
+void BlackJack::update()
 {
 	//card->Update();
-	deck->Update();
+	deck->update();
 }
 
-void BlackJack::Render()
+void BlackJack::render()
 {
 
 	SDL_RenderCopy(renderer, background, NULL, NULL);
 	
 	//card->Render();
-	deck->Render();
+	deck->render();
 }

@@ -76,22 +76,22 @@ Deck::~Deck()
 	std::cout << "Deck Cleaned" << std::endl;
 }
 
-void Deck::Update()
+void Deck::update()
 {
 	//xpos = sin(M_PI * SDL_GetTicks() / 1000.0)*100.0 + 250;
 	//ypos = cos(M_PI * SDL_GetTicks() / 1000.0)*100.0 + 250;
 	
 
 	for (int i = 0; i < cards.size(); i++) {
-		cards[i]->Update();
+		cards[i]->update();
 	}
 }
 
 
-void Deck::Render()
+void Deck::render()
 {
 	//TextureManager::ApplySurface(xpos, ypos, textureCard, renderer);
 	for (int i = 0; i < cards.size(); i++) {
-		cards[i]->Render();
+		cards[i]->render();
 	}
 }

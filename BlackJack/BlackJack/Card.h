@@ -24,8 +24,8 @@ public:
 	Card(std::string namePath, SDL_Renderer* rend, int score_, double x=0,double y=0, bool isAce_ = false);
 	~Card();
 
-	void Render();
-	void Update();
+	void render();
+	void update();
 
 };
 

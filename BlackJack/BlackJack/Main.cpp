@@ -1,10 +1,11 @@
 #include<memory>
+#include<time.h>
 #include"Game.h"
 
 
 int main(int argc, char* argv[])
 {
-	srand(SDL_GetTicks());
+	srand(time(0));
 
 	std::unique_ptr<Game> game;
 	

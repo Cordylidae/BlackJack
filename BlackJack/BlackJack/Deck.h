@@ -17,8 +17,8 @@ public:
 	Deck(SDL_Renderer* rend);
 	~Deck();
 
-	void Update();
-	void Render();
+	void update();
+	void render();
 };
 
 #endif // ! DECK_H

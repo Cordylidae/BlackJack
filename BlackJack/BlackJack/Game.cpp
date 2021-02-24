@@ -1,6 +1,11 @@
 #include"Game.h"
 #include"TextureManager.h"
 
+#include"Components.h"
+
+Manager manager;
+auto& Card(manager.addEntity());
+
 Game::Game(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
 {
 	int flags = 0;
@@ -36,6 +41,8 @@ Game::Game(const char* title, int xpos, int ypos, int width, int height, bool fu
 
 	blackJack = std::make_unique<BlackJack>(renderer);
 	
+
+	Card.addComponent<PositionComponent>();
 }
 
 Game::~Game() 
@@ -62,27 +69,28 @@ void Game::handleEvents()
 			break;
 	}
 
-	switch (event.key.keysym.sym)
+	/*switch (event.key.keysym.sym)
 	{
 	case SDLK_SPACE:
-		blackJack->Update();
 		break;
 
 	default:
 		break;
-	}
+	}*/
 }
 
 void Game::update() 
 {
-	
+	blackJack->update();
+
+	manager.update();
 }
 
 void Game::render() 
 {
 	SDL_RenderClear(renderer);
 
-	blackJack->Render();
+	blackJack->render();
 
 	SDL_RenderPresent(renderer);
 }

@@ -25,8 +25,8 @@ public:
 	BlackJack(SDL_Renderer* rend);
 	~BlackJack();
 
-	void Update();
-	void Render();
+	void update();
+	void render();
 };
 
 

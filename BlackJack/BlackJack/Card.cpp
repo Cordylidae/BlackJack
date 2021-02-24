@@ -21,16 +21,16 @@ Card::~Card()
 }
 
 
-void Card::Update() 
+void Card::update() 
 {
-	/*xpos = sin(M_PI * SDL_GetTicks() / 1000.0)*100.0 + 250;
-	ypos = cos(M_PI * SDL_GetTicks() / 1000.0)*100.0 + 250;*/
-	xpos = rand() % 600;
-	ypos = rand() % 400;
+	xpos = sin(M_PI * SDL_GetTicks() / 5000.0) * 100.0 + 250;// +rand() % 52;
+	ypos = cos(M_PI * SDL_GetTicks() / 5000.0) * 100.0 + 250;// +rand() % 52;
+	/*xpos = rand() % 600;
+	ypos = rand() % 400;*/
 }
 
 
-void Card::Render() 
+void Card::render() 
 {
 	if(isFace)TextureManager::ApplySurface(xpos, ypos, textureCard, renderer);
 	else TextureManager::ApplySurface(xpos, ypos, textureBack, renderer);
