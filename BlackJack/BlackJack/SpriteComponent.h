@@ -4,11 +4,12 @@
 #include"Components.h"
 #include"SDL.h"
 #include<string>
+#include"TextureManager.h"
 
 class SpriteComponent : public Component 
 {
 private:
-	PositionComponent* position;
+	TransformComponent* transform;
 	SDL_Texture* texture;
 	SDL_Rect srcRect, destRect;
 
@@ -17,24 +18,29 @@ public:
 	SpriteComponent() = default;
 	SpriteComponent(std::string path)
 	{
+		setTex(path);
+	}
 
+	void setTex(std::string path)
+	{
+		texture = TextureManager::LoadImage(path);
 	}
 
 	void init() override 
 	{
-		position = &entity->getComponent<PositionComponent>();
+		transform = &entity->getComponent<TransformComponent>();
 
 		srcRect.x = srcRect.y = 0;
 	}
 	void update() override 
 	{
-		destRect.x = position->x();
-		destRect.y = position->y();
+		destRect.x = transform->position.x;
+		destRect.y = transform->position.y;
 	}
 	
 	void draw() override 
 	{
-		
+		TextureManager::Draw(texture,destRect);
 	}
 	 
 };

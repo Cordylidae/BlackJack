@@ -9,7 +9,8 @@ private:
 	
 public:
 	static SDL_Texture* LoadImage(std::string file);
-	static void Draw(SDL_Texture* tex, double x, double y);
+	static void Draw(SDL_Texture* tex, SDL_Rect src, SDL_Rect dest);
+	static void Draw(SDL_Texture* tex, SDL_Rect dest);
 
 };
 

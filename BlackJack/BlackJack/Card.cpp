@@ -31,6 +31,13 @@ void Card::update()
 
 void Card::render() 
 {
-	if(isFace)TextureManager::Draw(textureCard, xpos, ypos);
-	else TextureManager::Draw(textureBack, xpos, ypos);
+	SDL_Rect dect;
+
+	dect.x = xpos;
+	dect.y = ypos;
+
+	
+
+	if(isFace)TextureManager::Draw(textureCard, dect);
+	else TextureManager::Draw(textureBack, dect);
 }

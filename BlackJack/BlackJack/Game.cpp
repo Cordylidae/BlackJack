@@ -46,7 +46,8 @@ Game::Game(const char* title, int xpos, int ypos, int width, int height, bool fu
 	blackJack = std::make_unique<BlackJack>();
 	
 
-	Card.addComponent<PositionComponent>();
+	Card.addComponent<TransformComponent>();
+	Card.addComponent<SpriteComponent>("assets/Cards/HeartKing.png");
 }
 
 Game::~Game() 
@@ -87,7 +88,39 @@ void Game::update()
 {
 	blackJack->update();
 
+	manager.refresh();
 	manager.update();
+
+	Vector2D vec(Card.getComponent<TransformComponent>().position);
+	std::cout<<vec.x<<" "<<vec.y<<std::endl;
+	/*
+	Card.getComponent<TransformComponent>().position.Add(Vector2D(5, 0));
+
+	if (Card.getComponent<TransformComponent>().position.x > 300)
+	{
+		Card.getComponent<SpriteComponent>().setTex("assets/Cards/Back.png");
+	}*/
+
+	if (vec.x < 600 && vec.y <400)
+	{
+		Card.getComponent<TransformComponent>().position.Add(Vector2D(5, 0));
+		Card.getComponent<SpriteComponent>().setTex("assets/Cards/PikaKing.png");
+	}
+	else if (vec.x >= 600 && vec.y < 400)
+	{
+		Card.getComponent<TransformComponent>().position.Add(Vector2D(0, 5));
+		Card.getComponent<SpriteComponent>().setTex("assets/Cards/HeartKing.png");
+	}
+	else if (vec.x >= 0 && vec.y >= 400)
+	{
+		Card.getComponent<TransformComponent>().position.Add(Vector2D(-5, 0));
+		Card.getComponent<SpriteComponent>().setTex("assets/Cards/RubeKing.png");
+	}
+	else if (vec.x < 0 && vec.y >= 0)
+	{
+		Card.getComponent<TransformComponent>().position.Add(Vector2D(0, -5));
+		Card.getComponent<SpriteComponent>().setTex("assets/Cards/KrestKing.png");
+	}
 }
 
 void Game::render() 
@@ -95,6 +128,7 @@ void Game::render()
 	SDL_RenderClear(renderer);
 
 	blackJack->render();
+	manager.draw();
 
 	SDL_RenderPresent(renderer);
 }

@@ -148,6 +148,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="TextureManager.cpp" />
+    <ClCompile Include="Vector2d.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BlackJack.h" />
@@ -156,9 +157,10 @@
     <ClInclude Include="Deck.h" />
     <ClInclude Include="ECS.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="PositionComponent.h" />
+    <ClInclude Include="TransformComponent.h" />
     <ClInclude Include="SpriteComponent.h" />
     <ClInclude Include="TextureManager.h" />
+    <ClInclude Include="Vector2d.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
