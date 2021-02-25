@@ -18,10 +18,9 @@ private:
 	double ypos;
 
 	SDL_Texture* textureCard, *textureBack;
-	SDL_Renderer* renderer;
 
 public:
-	Card(std::string namePath, SDL_Renderer* rend, int score_, double x=0,double y=0, bool isAce_ = false);
+	Card(std::string namePath, int score_, double x=0,double y=0, bool isAce_ = false);
 	~Card();
 
 	void render();

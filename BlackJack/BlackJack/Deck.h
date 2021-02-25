@@ -11,10 +11,8 @@ private:
 	
 	std::vector<std::shared_ptr<Card>> cards;
 
-	SDL_Renderer* renderer;
-
 public:
-	Deck(SDL_Renderer* rend);
+	Deck();
 	~Deck();
 
 	void update();

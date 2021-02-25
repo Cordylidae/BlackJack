@@ -6,8 +6,12 @@
 Manager manager;
 auto& Card(manager.addEntity());
 
+SDL_Renderer* Game::renderer = nullptr;
+
 Game::Game(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
 {
+
+
 	int flags = 0;
 	if (fullscreen)
 	{
@@ -39,7 +43,7 @@ Game::Game(const char* title, int xpos, int ypos, int width, int height, bool fu
 		isRunning = false;
 	}
 
-	blackJack = std::make_unique<BlackJack>(renderer);
+	blackJack = std::make_unique<BlackJack>();
 	
 
 	Card.addComponent<PositionComponent>();

@@ -1,12 +1,10 @@
 #include"BlackJack.h"
 #include"TextureManager.h"
 
-BlackJack::BlackJack(SDL_Renderer* rend)
+BlackJack::BlackJack()
 {
-	renderer = rend;
-
-	background = TextureManager::LoadImage("assets/table.png", rend);
-	deck = new Deck(rend);
+	background = TextureManager::LoadImage("assets/table.png");
+	deck = new Deck();
 	//card = new Card("assets/Cards/Pika9.png", rend);
 }
 
@@ -27,7 +25,7 @@ void BlackJack::update()
 void BlackJack::render()
 {
 
-	SDL_RenderCopy(renderer, background, NULL, NULL);
+	SDL_RenderCopy(Game::renderer, background, NULL, NULL);
 	
 	//card->Render();
 	deck->render();

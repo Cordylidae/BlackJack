@@ -3,10 +3,9 @@
 #include<algorithm>
 #include<thread>
 
-Deck::Deck(SDL_Renderer* rend)
+Deck::Deck()
 {
-	renderer = rend;
-
+	
 	std::shared_ptr<Card> card;
 	
 	for (int i = 0; i < 4; i++) {
@@ -60,7 +59,7 @@ Deck::Deck(SDL_Renderer* rend)
 				break;
 			}
 
-			card = std::make_shared<Card>(path + ".png", rend,score, sin(SDL_GetTicks())*5.0 + 10, cos(SDL_GetTicks())*5.0 + 10, isAce);
+			card = std::make_shared<Card>(path + ".png",score, sin(SDL_GetTicks())*5.0 + 10, cos(SDL_GetTicks())*5.0 + 10, isAce);
 			cards.push_back(card);
 		}
 

@@ -9,7 +9,6 @@ class Game
 private:
 	bool isRunning;
 	SDL_Window* window;
-	SDL_Renderer* renderer;
 	std::unique_ptr<BlackJack> blackJack;
 
 public:
@@ -22,6 +21,8 @@ public:
 	void render();
 
 	bool running() { return isRunning; }
+
+	static SDL_Renderer* renderer;
 };
 
 #endif // GAME_H

@@ -16,13 +16,11 @@ private:
 
 	SDL_Texture* background;
 	//SDL_Texture;
-	SDL_Renderer* renderer;
 	//Player* player;
 	Deck* deck;
-	Card* card;
 
 public:
-	BlackJack(SDL_Renderer* rend);
+	BlackJack();
 	~BlackJack();
 
 	void update();
