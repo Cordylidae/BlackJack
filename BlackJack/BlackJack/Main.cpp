@@ -9,7 +9,7 @@ int main(int argc, char* argv[])
 
 	std::unique_ptr<Game> game;
 	
-	game = std::make_unique<Game>("Black Jack v.0.1");
+	game = std::make_unique<Game>("Black Jack v.0.3");
 
 	const int FPS = 60;
 	const int frameDelay = 1000 / FPS;

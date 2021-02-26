@@ -1,23 +1,14 @@
-#include"Game.h"
 #include"TextureManager.h"
+#include"Game.h"
 
 #include"Components.h"
 
-Manager manager;
-auto& Card(manager.addEntity());
-auto& Table(manager.addEntity());
-
 SDL_Event Game::event;
-
-
 SDL_Renderer* Game::renderer = nullptr;
+//Manager Game::manager;
 
-enum groupLabes
-{
-	groupCards,
-	groupPlayers,
-	groupTable
-};
+
+
 
 Game::Game(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
 {
@@ -56,18 +47,6 @@ Game::Game(const char* title, int xpos, int ypos, int width, int height, bool fu
 
 	blackJack = std::make_unique<BlackJack>();
 	
-
-
-	Card.addComponent<TransformComponent>();
-	Card.addComponent<SpriteComponent>("assets/Cards/Z_Original.png",false,true);
-	Card.addComponent<KeyboardController>();
-	Card.addGroup(groupLabes::groupCards);
-	Card.getComponent<SpriteComponent>().SetRect(68, 88);
-
-	Table.addComponent<TransformComponent>();
-	Table.addComponent<SpriteComponent>("assets/table.png");
-	Table.addGroup(groupLabes::groupTable);
-	Table.getComponent<SpriteComponent>().init();
 }
 
 Game::~Game() 
@@ -96,10 +75,7 @@ void Game::handleEvents()
 
 void Game::update() 
 {
-	//blackJack->update();
-
-	manager.refresh();
-	manager.update();
+	blackJack->update();
 
 	//Vector2D vec(Card.getComponent<TransformComponent>().position);
 	/*
@@ -136,11 +112,7 @@ void Game::render()
 {
 	SDL_RenderClear(renderer);
 
-	//blackJack->render();
-	//manager.draw();
-
-	manager.draw(manager.getGroup(groupLabes::groupTable));
-	manager.draw(manager.getGroup(groupLabes::groupCards));
+	blackJack->render();
 
 	SDL_RenderPresent(renderer);
 }

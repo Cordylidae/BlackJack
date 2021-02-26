@@ -3,6 +3,7 @@
 
 #include<memory>
 #include"BlackJack.h"
+//#include"Components.h"
 
 class Game
 {
@@ -24,6 +25,7 @@ public:
 
 	static SDL_Renderer* renderer;
 	static SDL_Event event;
+	//static Manager* manager;
 };
 
 #endif // GAME_H

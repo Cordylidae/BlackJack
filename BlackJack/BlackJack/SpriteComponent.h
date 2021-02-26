@@ -26,22 +26,12 @@ private:
 public:
 	
 
-	std::map<const char*, Animation> animations;
-
-
+	std::map<int, Animation> animations;
+	
 	SpriteComponent() = default;
 	SpriteComponent(std::string path,bool f = true,bool isAnim = false)
 		: full(f), animated(isAnim)
 	{
-		Animation idle = Animation(0, 1, 100);
-		Animation move = Animation(1, 4, 100);
-
-		animations.emplace("Idle", idle);
-		animations.emplace("Move", move);
-
-		Play("Idle");
-		
-
 		setTex(path);
 	}
 
@@ -92,11 +82,11 @@ public:
 
 	}
 
-	void Play(const char* aniName)
+	void Play(int numberOfAnim)
 	{
-		frames = animations[aniName].frame;
-		animIndex = animations[aniName].index;
-		animSpeed = animations[aniName].speed;
+		frames = animations[numberOfAnim].frame;
+		animIndex = animations[numberOfAnim].index;
+		animSpeed = animations[numberOfAnim].speed;
 	}
 	 
 };

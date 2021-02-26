@@ -1,6 +1,12 @@
 #include"Card.h"
 #include"TextureManager.h"
 #include<math.h>
+#include"Components.h"
+
+
+Manager manager;
+
+
 
 Card::Card(std::string namePath, int score_, double x, double y, bool isAce_)
 	:xpos(x),ypos(y),score(score_),isAce(isAce_)

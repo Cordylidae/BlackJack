@@ -6,6 +6,13 @@
 #include"SDL.h"
 #include"SDL_image.h"
 
+enum groupLabes
+{
+	groupCards,
+	groupPlayers,
+	groupTable
+};
+
 class Card
 {
 private:
