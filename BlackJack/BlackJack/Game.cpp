@@ -59,10 +59,10 @@ Game::Game(const char* title, int xpos, int ypos, int width, int height, bool fu
 
 
 	Card.addComponent<TransformComponent>();
-	Card.addComponent<SpriteComponent>("assets/Cards/HeartKing.png",false);
+	Card.addComponent<SpriteComponent>("assets/Cards/Z_Original.png",false,true);
 	Card.addComponent<KeyboardController>();
 	Card.addGroup(groupLabes::groupCards);
-
+	Card.getComponent<SpriteComponent>().SetRect(68, 88);
 
 	Table.addComponent<TransformComponent>();
 	Table.addComponent<SpriteComponent>("assets/table.png");
