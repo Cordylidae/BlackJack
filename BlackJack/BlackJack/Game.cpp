@@ -5,8 +5,19 @@
 
 Manager manager;
 auto& Card(manager.addEntity());
+auto& Table(manager.addEntity());
+
+SDL_Event Game::event;
+
 
 SDL_Renderer* Game::renderer = nullptr;
+
+enum groupLabes
+{
+	groupCards,
+	groupPlayers,
+	groupTable
+};
 
 Game::Game(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
 {
@@ -46,8 +57,17 @@ Game::Game(const char* title, int xpos, int ypos, int width, int height, bool fu
 	blackJack = std::make_unique<BlackJack>();
 	
 
+
 	Card.addComponent<TransformComponent>();
-	Card.addComponent<SpriteComponent>("assets/Cards/HeartKing.png");
+	Card.addComponent<SpriteComponent>("assets/Cards/HeartKing.png",false);
+	Card.addComponent<KeyboardController>();
+	Card.addGroup(groupLabes::groupCards);
+
+
+	Table.addComponent<TransformComponent>();
+	Table.addComponent<SpriteComponent>("assets/table.png");
+	Table.addGroup(groupLabes::groupTable);
+	Table.getComponent<SpriteComponent>().init();
 }
 
 Game::~Game() 
@@ -61,7 +81,6 @@ Game::~Game()
 
 void Game::handleEvents()
 {
-	SDL_Event event;
 	SDL_PollEvent(&event);
 
 	switch (event.type)
@@ -73,26 +92,16 @@ void Game::handleEvents()
 		default:
 			break;
 	}
-
-	/*switch (event.key.keysym.sym)
-	{
-	case SDLK_SPACE:
-		break;
-
-	default:
-		break;
-	}*/
 }
 
 void Game::update() 
 {
-	blackJack->update();
+	//blackJack->update();
 
 	manager.refresh();
 	manager.update();
 
-	Vector2D vec(Card.getComponent<TransformComponent>().position);
-	std::cout<<vec.x<<" "<<vec.y<<std::endl;
+	//Vector2D vec(Card.getComponent<TransformComponent>().position);
 	/*
 	Card.getComponent<TransformComponent>().position.Add(Vector2D(5, 0));
 
@@ -101,7 +110,7 @@ void Game::update()
 		Card.getComponent<SpriteComponent>().setTex("assets/Cards/Back.png");
 	}*/
 
-	if (vec.x < 600 && vec.y <400)
+	/*if (vec.x < 600 && vec.y <400)
 	{
 		Card.getComponent<TransformComponent>().position.Add(Vector2D(5, 0));
 		Card.getComponent<SpriteComponent>().setTex("assets/Cards/PikaKing.png");
@@ -120,15 +129,18 @@ void Game::update()
 	{
 		Card.getComponent<TransformComponent>().position.Add(Vector2D(0, -5));
 		Card.getComponent<SpriteComponent>().setTex("assets/Cards/KrestKing.png");
-	}
+	}*/
 }
 
 void Game::render() 
 {
 	SDL_RenderClear(renderer);
 
-	blackJack->render();
-	manager.draw();
+	//blackJack->render();
+	//manager.draw();
+
+	manager.draw(manager.getGroup(groupLabes::groupTable));
+	manager.draw(manager.getGroup(groupLabes::groupCards));
 
 	SDL_RenderPresent(renderer);
 }

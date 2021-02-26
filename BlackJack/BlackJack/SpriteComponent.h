@@ -12,11 +12,12 @@ private:
 	TransformComponent* transform;
 	SDL_Texture* texture;
 	SDL_Rect srcRect, destRect;
+	bool full;
 
 public:
 
 	SpriteComponent() = default;
-	SpriteComponent(std::string path)
+	SpriteComponent(std::string path,bool f=true):full(f)
 	{
 		setTex(path);
 	}
@@ -30,7 +31,6 @@ public:
 	{
 		transform = &entity->getComponent<TransformComponent>();
 
-		srcRect.x = srcRect.y = 0;
 	}
 	void update() override 
 	{
@@ -40,9 +40,13 @@ public:
 	
 	void draw() override 
 	{
-		TextureManager::Draw(texture,destRect);
+		if (full)TextureManager::Draw(texture);
+		else TextureManager::Draw(texture,destRect);
+
 	}
+
 	 
 };
+
 
 #endif // ! SPRIT_COMP_H

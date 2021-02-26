@@ -39,6 +39,9 @@
     <ClCompile Include="Vector2d.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ECS.cpp">
+      <Filter>Source Files\ECS</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -70,6 +73,9 @@
     </ClInclude>
     <ClInclude Include="Vector2d.h">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyboardController.h">
+      <Filter>Source Files\ECS</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
