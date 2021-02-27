@@ -5,7 +5,6 @@
 
 Deck::Deck()
 {
-
 	std::shared_ptr<Card> card;
 	
 	for (int i = 0; i < 4; i++) {
@@ -77,20 +76,31 @@ Deck::~Deck()
 
 void Deck::update()
 {
-	//xpos = sin(M_PI * SDL_GetTicks() / 1000.0)*100.0 + 250;
-	//ypos = cos(M_PI * SDL_GetTicks() / 1000.0)*100.0 + 250;
-	
-
-	for (int i = 0; i < cards.size(); i++) {
+	/*for (int i = 0; i < cards.size(); i++) {
 		cards[i]->update();
-	}
+	}*/
 }
 
 
 void Deck::render()
 {
-	//TextureManager::ApplySurface(xpos, ypos, textureCard, renderer);
 	for (int i = 0; i < cards.size(); i++) {
 		cards[i]->render();
 	}
 }
+
+std::shared_ptr<Card> Deck::moveTopCard()
+{
+	if (isEmpty()) {
+		std::cout << "Empty Deck cant delete object" << std::endl;
+	}
+
+	std::shared_ptr<Card> temp;
+
+	cards.back()->update();
+	temp = cards.back();
+	cards.pop_back();
+
+	return temp;
+}
+

@@ -2,59 +2,80 @@
 #include"TextureManager.h"
 
 
-#include"Components.h"
-
-extern Manager manager;
-
 BlackJack::BlackJack()
 {
 	background = TextureManager::LoadImage("assets/table.png");
-	//deck = new Deck();
-	//card = new Card("assets/Cards/Pika9.png",);
-	auto& Card(manager.addEntity());
-	auto& Table(manager.addEntity());
+	
+	deck = new Deck();
+	player = new Player();
 
-
-
-	Card.addComponent<TransformComponent>();
-	Card.addComponent<SpriteComponent>("assets/Cards/Z_Original.png", false, true);
-	Card.getComponent<SpriteComponent>().animations.emplace(0, Animation(0, 1, 100));
-	Card.getComponent<SpriteComponent>().animations.emplace(1, Animation(1, 4, 100));
-	Card.getComponent<SpriteComponent>().Play(0);
-	Card.addComponent<KeyboardController>();
-	Card.addGroup(groupLabes::groupCards);
-	Card.getComponent<SpriteComponent>().SetRect(68, 88);
-
-	Table.addComponent<TransformComponent>();
-	Table.addComponent<SpriteComponent>("assets/table.png");
-	Table.addGroup(groupLabes::groupTable);
-	Table.getComponent<SpriteComponent>().init();
+	click = true;
 }
 
 BlackJack::~BlackJack()
 {
-	//delete deck;
-	//delete card;
+	delete deck;
+	delete player;
 	SDL_DestroyTexture(background);
 	
 	std::cout << "Black_Jack Cleaned" << std::endl;
 }
 
+
+void BlackJack::reset()
+{
+	delete deck;
+	delete player;
+
+	deck = new Deck();
+	player = new Player();
+}
+
 void BlackJack::update()
 {
-	//card->Update();
-	//deck->update();
-	manager.refresh();
-	manager.update();
+	deck->update();
+	player->update();
+
+	if (Game::event.type == SDL_KEYDOWN)
+	{
+		switch (Game::event.key.keysym.sym)
+		{
+		case SDLK_SPACE:
+			if (click) {
+				
+				if(!deck->isEmpty())player->addCardtoHand(deck->moveTopCard());
+				click = false;
+			}
+		case SDLK_r:
+			if (click) {
+				
+				reset();
+				click = false;
+			}
+		default:
+			break;
+		}
+	}
+	if (Game::event.type == SDL_KEYUP)
+	{
+		switch (Game::event.key.keysym.sym)
+		{
+		case SDLK_SPACE:
+		case SDLK_r:
+			click = true;
+		default:
+			break;
+		}
+	}
 }
 
 void BlackJack::render()
 {
 
-	//SDL_RenderCopy(Game::renderer, background, NULL, NULL);
+	SDL_RenderCopy(Game::renderer, background, NULL, NULL);
 
-	manager.draw(manager.getGroup(groupLabes::groupTable));
-	manager.draw(manager.getGroup(groupLabes::groupCards));
-	//card->Render();
-	//deck->render();
+	deck->render();
+	player->render();
+
 }
+

@@ -1,8 +1,8 @@
 #ifndef BlackJack_H
 #define BlackJack_H
 
-#include"Card.h"
-#include"Deck.h"
+#include"Player.h"
+
 
 class BlackJack
 {
@@ -11,10 +11,10 @@ private:
 	//int countOfPlayer;
 
 	SDL_Texture* background;
-	//SDL_Texture;
-	//Player* player;
-	//Deck* deck;
-	Card* card;
+	Deck* deck;
+	Player* player;
+
+	bool click;
 
 public:
 	BlackJack();
@@ -22,6 +22,7 @@ public:
 
 	void update();
 	void render();
+	void reset();
 };
 
 

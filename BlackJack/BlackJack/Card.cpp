@@ -1,11 +1,12 @@
 #include"Card.h"
 #include"TextureManager.h"
 #include<math.h>
-#include"Components.h"
-
-
-Manager manager;
-
+//
+//#include"Components.h"
+//
+//
+//Manager manager;
+//
 
 
 Card::Card(std::string namePath, int score_, double x, double y, bool isAce_)
@@ -21,17 +22,15 @@ Card::~Card()
 {
 	SDL_DestroyTexture(textureCard);
 	SDL_DestroyTexture(textureBack);
-
-	//std::cout << "Card Deleted" << std::endl;
 }
 
 
 void Card::update() 
 {
-	xpos = sin(M_PI * SDL_GetTicks() / 5000.0) * 100.0 + 250;// +rand() % 52;
-	ypos = cos(M_PI * SDL_GetTicks() / 5000.0) * 100.0 + 250;// +rand() % 52;
-	/*xpos = rand() % 600;
-	ypos = rand() % 400;*/
+	//xpos = sin(M_PI * SDL_GetTicks() / 5000.0) * 100.0 + 250;// +rand() % 52;
+	//ypos = cos(M_PI * SDL_GetTicks() / 5000.0) * 100.0 + 250;// +rand() % 52;
+	xpos = rand() % 600;
+	ypos = rand() % 400;
 }
 
 

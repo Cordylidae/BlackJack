@@ -77,16 +77,9 @@ void Game::update()
 {
 	blackJack->update();
 
-	//Vector2D vec(Card.getComponent<TransformComponent>().position);
-	/*
-	Card.getComponent<TransformComponent>().position.Add(Vector2D(5, 0));
+	/*Vector2D vec(Card.getComponent<TransformComponent>().position);
 
-	if (Card.getComponent<TransformComponent>().position.x > 300)
-	{
-		Card.getComponent<SpriteComponent>().setTex("assets/Cards/Back.png");
-	}*/
-
-	/*if (vec.x < 600 && vec.y <400)
+	if (vec.x < 600 && vec.y <400)
 	{
 		Card.getComponent<TransformComponent>().position.Add(Vector2D(5, 0));
 		Card.getComponent<SpriteComponent>().setTex("assets/Cards/PikaKing.png");
@@ -106,6 +99,7 @@ void Game::update()
 		Card.getComponent<TransformComponent>().position.Add(Vector2D(0, -5));
 		Card.getComponent<SpriteComponent>().setTex("assets/Cards/KrestKing.png");
 	}*/
+
 }
 
 void Game::render() 

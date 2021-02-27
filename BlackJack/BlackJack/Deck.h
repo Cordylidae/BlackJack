@@ -8,15 +8,18 @@
 class Deck
 {
 private:
-	
+
+protected:
 	std::vector<std::shared_ptr<Card>> cards;
 
 public:
 	Deck();
-	~Deck();
+	virtual ~Deck();
 
-	void update();
-	void render();
+	virtual void update();
+	virtual void render();
+	bool isEmpty() { return cards.empty(); }
+	std::shared_ptr<Card> moveTopCard();
 };
 
 #endif // ! DECK_H
