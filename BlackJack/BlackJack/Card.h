@@ -5,6 +5,7 @@
 #include<string>
 #include"SDL.h"
 #include"SDL_image.h"
+#include"SDL_ttf.h"
 
 enum groupLabes
 {
@@ -31,7 +32,7 @@ public:
 	~Card();
 
 	void render();
-	void update();
+	void update(double x, double y);
 
 };
 

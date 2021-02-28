@@ -7,7 +7,7 @@ class Player : public Deck
 private:
 
 public:
-	Player();
+	Player(double x,double y);
 	~Player();
 
 	void update() override;

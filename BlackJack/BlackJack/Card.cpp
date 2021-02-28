@@ -25,12 +25,10 @@ Card::~Card()
 }
 
 
-void Card::update() 
+void Card::update(double x, double y) 
 {
-	//xpos = sin(M_PI * SDL_GetTicks() / 5000.0) * 100.0 + 250;// +rand() % 52;
-	//ypos = cos(M_PI * SDL_GetTicks() / 5000.0) * 100.0 + 250;// +rand() % 52;
-	xpos = rand() % 600;
-	ypos = rand() % 400;
+	xpos = x;
+	ypos = y;
 }
 
 

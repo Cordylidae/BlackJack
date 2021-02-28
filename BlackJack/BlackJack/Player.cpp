@@ -1,6 +1,9 @@
 #include"Player.h"
 
-Player::Player() {
+Player::Player(double x,double y){
+	xpos = x;
+	ypos = y;
+
 	cards.clear();
 }
 Player::~Player() {
@@ -10,7 +13,12 @@ Player::~Player() {
 	std::cout << "Player Hand Cleaned" << std::endl;
 }
 
-void Player::update(){}
+void Player::update(){
+
+	for (int i = 0; i < cards.size(); i++) {
+		cards[i]->update(xpos+i*20, ypos);
+	}
+}
 
 void Player::render()
 {

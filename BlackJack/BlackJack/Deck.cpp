@@ -3,7 +3,7 @@
 #include<algorithm>
 #include<thread>
 
-Deck::Deck()
+Deck::Deck(double x,double y):xpos(x),ypos(y)
 {
 	std::shared_ptr<Card> card;
 	
@@ -58,7 +58,7 @@ Deck::Deck()
 				break;
 			}
 
-			card = std::make_shared<Card>(path + ".png",score, sin(SDL_GetTicks())*5.0 + 10, cos(SDL_GetTicks())*5.0 + 10, isAce);
+			card = std::make_shared<Card>(path + ".png",score, sin(SDL_GetTicks())*5.0 + xpos, cos(SDL_GetTicks())*5.0 + ypos, isAce);
 			cards.push_back(card);
 		}
 
@@ -97,7 +97,7 @@ std::shared_ptr<Card> Deck::moveTopCard()
 
 	std::shared_ptr<Card> temp;
 
-	cards.back()->update();
+	//cards.back()->update();
 	temp = cards.back();
 	cards.pop_back();
 

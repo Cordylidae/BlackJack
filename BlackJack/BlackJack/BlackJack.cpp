@@ -7,7 +7,7 @@ BlackJack::BlackJack()
 	background = TextureManager::LoadImage("assets/table.png");
 	
 	deck = new Deck();
-	player = new Player();
+	player = new Player(50,450);
 
 	click = true;
 }
@@ -28,7 +28,7 @@ void BlackJack::reset()
 	delete player;
 
 	deck = new Deck();
-	player = new Player();
+	player = new Player(50,450);
 }
 
 void BlackJack::update()
@@ -44,6 +44,7 @@ void BlackJack::update()
 			if (click) {
 				
 				if(!deck->isEmpty())player->addCardtoHand(deck->moveTopCard());
+				player->update();
 				click = false;
 			}
 		case SDLK_r:

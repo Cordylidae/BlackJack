@@ -11,9 +11,10 @@ private:
 
 protected:
 	std::vector<std::shared_ptr<Card>> cards;
+	double xpos, ypos;
 
 public:
-	Deck();
+	Deck(double x=10,double y=10);
 	virtual ~Deck();
 
 	virtual void update();
