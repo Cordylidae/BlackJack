@@ -12,7 +12,7 @@
 Card::Card(std::string namePath, int score_, double x, double y, bool isAce_)
 	:xpos(x),ypos(y),score(score_),isAce(isAce_)
 {
-	isFace = true;
+	isFace = false;
 	
 	textureCard = TextureManager::LoadImage(namePath);
 	textureBack = TextureManager::LoadImage("assets/Cards/Back.png");

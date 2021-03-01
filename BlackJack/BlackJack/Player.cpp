@@ -4,6 +4,9 @@ Player::Player(double x,double y){
 	xpos = x;
 	ypos = y;
 
+	state = Player::None;
+	score = 0;
+
 	cards.clear();
 }
 Player::~Player() {
@@ -27,8 +30,40 @@ void Player::render()
 
 void Player::addCardtoHand(std::shared_ptr<Card> card)
 {
-	Player::cards.push_back(card);
-	
-	std::cout << cards.size() << std::endl;
+	if (state == Player::None) {
 
+		Player::cards.push_back(card);
+
+		cards.back()->isFace = true;
+
+		score += (cards.back()->getScore());
+
+		playerState();
+
+		std::cout << cards.size() << " " <<score<<std::endl;
+
+
+	}
+	if (state == Player::Burn)
+	{
+		std::cout<<"Burn"<<std::endl;
+	}
+	if (state == Player::Win)
+	{
+		std::cout << "Win" << std::endl;
+	}
+	if (state == Player::Lose)
+	{
+		std::cout << "Lose" << std::endl;
+	}
+	
+}
+
+Player::State Player::playerState()
+{
+	if (score > 21)state = Player::Burn;
+	if (score == 21)state = Player::Win;
+	//if (score < 17)state = Player::Lose;
+	//if (score >= 17 && score <= 21)state = Player::Win;
+	return state;
 }

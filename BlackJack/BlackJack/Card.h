@@ -19,7 +19,6 @@ class Card
 private:
 
 	bool isAce;
-	bool isFace;
 	int score;
 
 	double xpos;
@@ -33,7 +32,10 @@ public:
 
 	void render();
 	void update(double x, double y);
+	int getScore() { return score; }
+	bool getIsAce() { return isAce; }
 
+	bool isFace;
 };
 
 #endif

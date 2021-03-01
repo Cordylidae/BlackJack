@@ -43,7 +43,11 @@ void BlackJack::update()
 		case SDLK_SPACE:
 			if (click) {
 				
-				if(!deck->isEmpty())player->addCardtoHand(deck->moveTopCard());
+				if (!deck->isEmpty() && player->playerState() == Player::None)
+				{
+					player->addCardtoHand(deck->moveTopCard());
+				}
+
 				player->update();
 				click = false;
 			}

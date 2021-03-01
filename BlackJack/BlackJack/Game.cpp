@@ -58,8 +58,8 @@ Game::Game(const char* title, int xpos, int ypos, int width, int height, bool fu
 
 	//make texture of text
 	{
-
-		text = TextManager::LoadText("assets/Fonts/AmaticBold.ttf", 25);
+		TextManager::LoadFont("assets/Fonts/Bebas.ttf", 25);
+		text = TextManager::LoadText("Black Jack view", 0.3);
 		
 	}
 }
