@@ -40,6 +40,8 @@ public:
 	bool getIsAce() { return isAce; }
 	bool getIsAnimation() { return isAnim; }
 
+	SDL_Rect sizeOfCard();
+
 	bool isFace;
 };
 

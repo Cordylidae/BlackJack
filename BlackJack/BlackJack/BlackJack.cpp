@@ -2,7 +2,7 @@
 #include"TextureManager.h"
 
 
-BlackJack::BlackJack()
+BlackJack::BlackJack(int playerNum):numberOfPlayer(playerNum)
 {
 	background = TextureManager::LoadImage("assets/table.png");
 	
@@ -10,18 +10,19 @@ BlackJack::BlackJack()
 
 	std::shared_ptr<Player> player;
 
-	for (int i = 0; i < 3; i++) {
-		player = std::make_shared<Player>(50 + i * 200, 450);
+	for (int i = 0; i < numberOfPlayer; i++) {
+		player = std::make_shared<Player>(50 + i * 200, 450,i+1);
 		players.push_back(player);
 	}
 
-	player = std::make_shared<Diler>(100, 100);
+	player = std::make_shared<Diler>(100, 100,indexDiler+1);
 	players.push_back(player);
 
 
 	state = BlackJack::Start;
 	indexPlayer = 0;
 	indexDiler = players.size() - 1;
+	players[indexPlayer]->isMyTurn = true;
 	click = true;
 }
 
@@ -43,12 +44,12 @@ void BlackJack::reset()
 
 	std::shared_ptr<Player> player;
 
-	for (int i = 0; i < 3; i++) {
-		player = std::make_shared<Player>(50 + i * 200, 450);
+	for (int i = 0; i < numberOfPlayer; i++) {
+		player = std::make_shared<Player>(50 + i * 200, 450,i+1);
 		players.push_back(player);
 	}
 
-	player = std::make_shared<Diler>(100, 100);
+	player = std::make_shared<Diler>(100, 100,indexDiler+1);
 	players.push_back(player);
 
 
@@ -58,6 +59,7 @@ void BlackJack::reset()
 
 	indexDiler = players.size() - 1;
 	indexPlayer = 0;
+	players[indexPlayer]->isMyTurn = true;
 }
 
 void BlackJack::render()
@@ -109,12 +111,19 @@ void BlackJack::update()
 
 		if (animFinish) {
 			
-			if (indexPlayer >= indexDiler) { players[indexDiler]->openCard(); state = BlackJack::End; }
+			if (indexPlayer >= indexDiler) 
+			{
+				state = BlackJack::End; WinLose();
+			}
 			else state = BlackJack::PlayerInterection;
 
 			if (players[indexPlayer]->state != Player::None)
+			{
+				players[indexPlayer]->isMyTurn = false;
+				players[indexPlayer+1]->isMyTurn = true;
 				indexPlayer++;
 
+			}
 		}
 		
 	}
@@ -126,9 +135,7 @@ void BlackJack::update()
 		break;
 	case BlackJack::End:
 	{
-		WinLose();
-
-		SDL_Delay(2000);
+		SDL_Delay(3000);
 		reset();
 	}
 		break;
@@ -137,6 +144,7 @@ void BlackJack::update()
 	}
 
 
+	
 }
 
 void BlackJack::playerInteractiv()
@@ -161,6 +169,7 @@ void BlackJack::playerInteractiv()
 			if (click) {
 
 				reset();
+				state = BlackJack::Start;
 				click = false;
 			}
 		case SDLK_s:
@@ -169,6 +178,8 @@ void BlackJack::playerInteractiv()
 				do {
 					if (indexPlayer < players.size()) {
 
+						players[indexPlayer]->isMyTurn = false;
+						players[indexPlayer + 1]->isMyTurn = true;
 						indexPlayer++;
 
 					}
@@ -187,8 +198,10 @@ void BlackJack::playerInteractiv()
 	{
 		switch (Game::event.key.keysym.sym)
 		{
-		case SDLK_SPACE:
 		case SDLK_r:
+			click = true;
+			break;
+		case SDLK_SPACE:
 		case SDLK_s:
 			state = BlackJack::Animation;
 			click = true;
@@ -200,6 +213,8 @@ void BlackJack::playerInteractiv()
 
 	if (indexPlayer == indexDiler)
 	{
+		players[indexDiler]->openCard();
+
 		while(players[indexPlayer]->getScore()<17)
 		players[indexPlayer]->addCardtoHand(deck->moveTopCard());
 		state = BlackJack::Animation;
@@ -213,10 +228,8 @@ void BlackJack::WinLose()
 	{
 		if (players[i]->state != Player::Burn)
 		{
-			if(!BurnDiler && players[i]->getScore() < players[indexDiler]->getScore())std::cout << "Player #" << i + 1 << " Losed\n";
-			else std::cout << "Player #" << i + 1 << " Won\n";
+			if(!BurnDiler && players[i]->getScore() < players[indexDiler]->getScore())players[i]->state = Player::Lose;
+			else players[i]->state = Player::Win;
 		}
-		else std::cout << "Player #" << i + 1 << " Burned\n";
 	}
-	if(BurnDiler)std::cout << "Diler Burned\n";
 }

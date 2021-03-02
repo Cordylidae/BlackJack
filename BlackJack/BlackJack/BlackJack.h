@@ -16,10 +16,11 @@ private:
 	std::vector<std::shared_ptr<Player>> players; // 0 - index of Diler
 
 	int indexPlayer,indexDiler;
+	const int numberOfPlayer;
 	bool click;
 
 public:
-	BlackJack();
+	BlackJack(int playerNum = 3);
 	~BlackJack();
 
 	void update();

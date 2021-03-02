@@ -14,7 +14,7 @@ protected:
 	double xpos, ypos;
 
 public:
-	Deck(double x=10,double y=10);
+	Deck(double x=632,double y=100);
 	virtual ~Deck();
 
 	virtual void update();

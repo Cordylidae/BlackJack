@@ -82,3 +82,13 @@ void Card::render()
 	if(isFace)TextureManager::Draw(textureCard, dect);
 	else TextureManager::Draw(textureBack, dect);
 }
+
+SDL_Rect Card::sizeOfCard()
+{
+	SDL_Rect rect;
+	rect.x = rect.y = 0;
+
+	SDL_QueryTexture(textureCard, NULL, NULL, &rect.w, &rect.w);
+
+	return rect;
+}

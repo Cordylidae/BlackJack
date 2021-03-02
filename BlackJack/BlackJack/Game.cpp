@@ -58,9 +58,7 @@ Game::Game(const char* title, int xpos, int ypos, int width, int height, bool fu
 
 	//make texture of text
 	{
-		TextManager::LoadFont("assets/Fonts/Bebas.ttf", 25);
-		text = TextManager::LoadText("Black Jack view", 0.3);
-		
+		text = TextManager::LoadText("Black Jack view");
 	}
 }
 
