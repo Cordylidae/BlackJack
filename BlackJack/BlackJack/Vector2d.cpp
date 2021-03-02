@@ -68,24 +68,38 @@ Vector2D& Vector2D::Div(double k)
 	return *this;
 }
 
-Vector2D& operator+(Vector2D& v1, const Vector2D& v2)
+Vector2D operator+(Vector2D& v1, const Vector2D& v2)
 {
-	return v1.Add(v2);
+	Vector2D v3;
+	v3.x = v1.x + v2.x;
+	v3.y = v1.y + v2.y;
+
+	return v3;
 }
 
-Vector2D& operator-(Vector2D& v1, const Vector2D& v2)
+Vector2D operator-(Vector2D& v1, const Vector2D& v2)
 {
-	return v1.Sub(v2);
+	Vector2D v3;
+	v3.x = v1.x - v2.x;
+	v3.y = v1.y - v2.y;
+
+	return v3;
 }
 
-Vector2D& operator*(Vector2D& v1, double k)
+Vector2D operator*(Vector2D& v1, double k)
 {
-	return v1.Mul(k);
+	Vector2D v3;
+	v3.x = v1.x * k;
+	v3.y = v1.y * k;
+
+	return v3;
 }
 
-Vector2D& operator/(Vector2D& v1, double k)
+Vector2D operator/(Vector2D& v1, double k)
 {
-	return v1.Div(k);
+	Vector2D v3 = v1;
+
+	return v3.Div(k);
 }
 
 Vector2D& Vector2D::operator+=(const Vector2D& vec)

@@ -1,19 +1,21 @@
 #ifndef BlackJack_H
 #define BlackJack_H
 
-#include"Player.h"
+#include"Diler.h"
 
 
 class BlackJack
 {
 private:
-	//enum State {Start, Turn, End} state;
+	
+	enum State {Start, Animation, PlayerInterection, End} state;
 	//int countOfPlayer;
 
 	SDL_Texture* background;
 	Deck* deck;
-	Player* player;
+	std::vector<std::shared_ptr<Player>> players; // 0 - index of Diler
 
+	int indexPlayer,indexDiler;
 	bool click;
 
 public:
@@ -23,6 +25,8 @@ public:
 	void update();
 	void render();
 	void reset();
+	void playerInteractiv();
+	void WinLose();
 };
 
 

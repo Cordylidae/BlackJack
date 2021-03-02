@@ -6,19 +6,21 @@ class Player : public Deck
 {
 public:
 	enum State { Win, Lose, Burn, None };
-
-private:
 	State state;
+
+protected:
 	int score;
 
 public:
 	Player(double x,double y);
-	~Player();
+	virtual ~Player();
 
 	void update() override;
 	void render() override;
 	std::shared_ptr<Card> moveTopCard() = delete;
-	void addCardtoHand(std::shared_ptr<Card> card);
-	State playerState();
-
+	
+	virtual void addCardtoHand(std::shared_ptr<Card> card, bool face=true);
+	
+	int getScore();
+	
 };

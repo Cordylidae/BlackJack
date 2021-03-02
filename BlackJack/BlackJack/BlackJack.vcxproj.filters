@@ -48,6 +48,9 @@
     <ClCompile Include="TextManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Diler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -90,6 +93,9 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="TextManager.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Diler.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

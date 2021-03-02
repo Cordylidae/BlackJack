@@ -21,6 +21,9 @@ public:
 	virtual void render();
 	bool isEmpty() { return cards.empty(); }
 	std::shared_ptr<Card> moveTopCard();
+
+	virtual bool animationFinish();
+	void openCard();
 };
 
 #endif // ! DECK_H

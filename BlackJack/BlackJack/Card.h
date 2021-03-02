@@ -6,6 +6,7 @@
 #include"SDL.h"
 #include"SDL_image.h"
 #include"SDL_ttf.h"
+#include"Vector2d.h"
 
 enum groupLabes
 {
@@ -19,10 +20,11 @@ class Card
 private:
 
 	bool isAce;
+	bool isAnim;
 	int score;
 
-	double xpos;
-	double ypos;
+	Vector2D now,finish,direction;
+	double speedAnim;
 
 	SDL_Texture* textureCard, *textureBack;
 
@@ -32,8 +34,11 @@ public:
 
 	void render();
 	void update(double x, double y);
+	void animation();
+	
 	int getScore() { return score; }
 	bool getIsAce() { return isAce; }
+	bool getIsAnimation() { return isAnim; }
 
 	bool isFace;
 };

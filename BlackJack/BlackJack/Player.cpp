@@ -7,6 +7,8 @@ Player::Player(double x,double y){
 	state = Player::None;
 	score = 0;
 
+	
+
 	cards.clear();
 }
 Player::~Player() {
@@ -17,10 +19,12 @@ Player::~Player() {
 }
 
 void Player::update(){
-
+	
 	for (int i = 0; i < cards.size(); i++) {
-		cards[i]->update(xpos+i*20, ypos);
+		cards[i]->update((xpos+i*20), ypos);
 	}
+
+	score = getScore();
 }
 
 void Player::render()
@@ -28,20 +32,15 @@ void Player::render()
 	Deck::render();	
 }
 
-void Player::addCardtoHand(std::shared_ptr<Card> card)
+void Player::addCardtoHand(std::shared_ptr<Card> card,bool face)
 {
 	if (state == Player::None) {
 
 		Player::cards.push_back(card);
 
-		cards.back()->isFace = true;
+		cards.back()->isFace = face;
 
-		score += (cards.back()->getScore());
-
-		playerState();
-
-		std::cout << cards.size() << " " <<score<<std::endl;
-
+		//score = getScore();
 
 	}
 	if (state == Player::Burn)
@@ -59,11 +58,23 @@ void Player::addCardtoHand(std::shared_ptr<Card> card)
 	
 }
 
-Player::State Player::playerState()
+int Player::getScore()
 {
+	int temp = 0, countOfAce=0;
+
+	for (auto card : cards)
+	{
+		if (card->getIsAce()) { temp += 1; countOfAce++; }
+		else temp+= card->getScore();
+	}
+
+	for (int i = 0; i < countOfAce;i++)
+	{
+		if (temp + 10 <= 21) { temp += 10;}
+	}
+
 	if (score > 21)state = Player::Burn;
 	if (score == 21)state = Player::Win;
-	//if (score < 17)state = Player::Lose;
-	//if (score >= 17 && score <= 21)state = Player::Win;
-	return state;
+
+	return temp;
 }

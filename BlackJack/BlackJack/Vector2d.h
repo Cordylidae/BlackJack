@@ -20,10 +20,10 @@ public:
 	Vector2D& Mul(double k);
 	Vector2D& Div(double k);
 
-	friend Vector2D& operator+(Vector2D& v1, const Vector2D& v2);
-	friend Vector2D& operator-(Vector2D& v1, const Vector2D& v2);
-	friend Vector2D& operator*(Vector2D& v1, double k);
-	friend Vector2D& operator/(Vector2D& v1, double k);
+	friend Vector2D operator+(Vector2D& v1, const Vector2D& v2);
+	friend Vector2D operator-(Vector2D& v1, const Vector2D& v2);
+	friend Vector2D operator*(Vector2D& v1, double k);
+	friend Vector2D operator/(Vector2D& v1, double k);
 
 	Vector2D& operator+=(const Vector2D& vec);
 	Vector2D& operator-=(const Vector2D& vec);

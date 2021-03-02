@@ -76,11 +76,19 @@ Deck::~Deck()
 
 void Deck::update()
 {
-	/*for (int i = 0; i < cards.size(); i++) {
-		cards[i]->update();
-	}*/
+	
 }
 
+bool Deck::animationFinish()
+{
+	bool animYet = false;
+
+	for (int i = 0; i < cards.size(); i++) {
+		if (cards[i]->getIsAnimation())animYet = true;
+	}
+
+	return !animYet;
+}
 
 void Deck::render()
 {
@@ -104,3 +112,9 @@ std::shared_ptr<Card> Deck::moveTopCard()
 	return temp;
 }
 
+void Deck::openCard()
+{
+	for (int i = 0; i < cards.size(); i++) {
+		cards[i]->isFace = true;
+	}
+}

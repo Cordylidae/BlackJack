@@ -10,10 +10,16 @@
 
 
 Card::Card(std::string namePath, int score_, double x, double y, bool isAce_)
-	:xpos(x),ypos(y),score(score_),isAce(isAce_)
+	:score(score_),isAce(isAce_)
 {
+	speedAnim = 100;
+
+	now.x = x;
+	now.y = y;
+
 	isFace = false;
-	
+	isAnim = false;
+
 	textureCard = TextureManager::LoadImage(namePath);
 	textureBack = TextureManager::LoadImage("assets/Cards/Back.png");
 }
@@ -27,19 +33,51 @@ Card::~Card()
 
 void Card::update(double x, double y) 
 {
-	xpos = x;
-	ypos = y;
+	if (!isAnim) {
+
+		finish.x = x;
+		finish.y = y;
+		isAnim = true;
+
+		direction = finish - now;
+		direction /= speedAnim;
+
+		/*direction.x = int(direction.x);
+		direction.y = int(direction.y);*/
+
+		/*std::cout << direction.x<<" " << direction.y << std::endl;
+
+		std::cout << now.x << " " << now.y << std::endl;
+		std::cout << finish.x << " " << finish.y << std::endl << std::endl;*/
+
+	}
+	else animation();
+	
+	/*finish.x = x;
+	finish.y = y;
+
+	std::cout << now.x << " " << now.y << std::endl;
+	std::cout << finish.x << " " << finish.y << std::endl << std::endl;
+
+	now.x = x;
+	now.y = y;*/
 }
 
+void Card::animation()
+{
+	if (abs(now.x - finish.x) <= 0.1 && abs(now.y - finish.y) <= 0.1)isAnim = false;
+	else {
+		now += direction;
+	}
+}
 
 void Card::render() 
 {
 	SDL_Rect dect;
 
-	dect.x = xpos;
-	dect.y = ypos;
+	dect.x = now.x;
+	dect.y = now.y;
 
-	
 
 	if(isFace)TextureManager::Draw(textureCard, dect);
 	else TextureManager::Draw(textureBack, dect);
