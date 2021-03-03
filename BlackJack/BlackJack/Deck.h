@@ -24,6 +24,7 @@ public:
 
 	virtual bool animationFinish();
 	void openCard();
+	Vector2D getPos();
 };
 
 #endif // ! DECK_H

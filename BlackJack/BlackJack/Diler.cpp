@@ -83,4 +83,28 @@ void Diler::drawTextOfPlayer()
 	pos.y = ypos - 30;
 
 	TextManager::Draw(playerText, pos);
+
+	pos.y = ypos + 88;
+	playerState = TextManager::LoadText(std::to_string(getScore()), 25, { 0,0,0 });
+	TextManager::Draw(playerState, pos);
+
+	pos.y = ypos;
+	SDL_QueryTexture(playerState, NULL, NULL, &pos.w, &pos.h);
+
+	switch (state)
+	{
+	case Win:
+		playerState = TextManager::LoadText("Win", 25, { 0,255,0 });
+		TextManager::Draw(playerState, pos);
+		break;
+	case Lose:
+		playerState = TextManager::LoadText("Lose", 25, { 255,0,0 });
+		TextManager::Draw(playerState, pos);
+		break;
+	case Burn:
+		playerState = TextManager::LoadText("Burn", 25, { 255,180,0 });
+		TextManager::Draw(playerState, pos);
+		break;
+	}
+
 }

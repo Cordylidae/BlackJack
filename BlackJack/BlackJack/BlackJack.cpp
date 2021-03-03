@@ -4,9 +4,26 @@
 
 BlackJack::BlackJack(int playerNum):numberOfPlayer(playerNum)
 {
-	background = TextureManager::LoadImage("assets/table.png");
-	
+
 	deck = new Deck();
+
+	background = TextureManager::LoadImage("assets/table.png");
+	stand.sprite = TextureManager::LoadImage("assets/stand.png");
+	hit.sprite = TextureManager::LoadImage("assets/hit.png");
+
+	SDL_Rect rect;
+
+	SDL_QueryTexture(hit.sprite, NULL, NULL, &rect.w, &rect.h);
+	
+	
+	hit.rect.w = stand.rect.w = rect.w;
+	hit.rect.h = stand.rect.h = rect.h;
+
+	hit.rect.x = deck->getPos().x - (hit.rect.w) / 4 * 3;
+	stand.rect.y = hit.rect.y = deck->getPos().y + 120;
+	stand.rect.x += hit.rect.x + hit.rect.w + 10;
+
+
 
 	std::shared_ptr<Player> player;
 
@@ -29,8 +46,11 @@ BlackJack::BlackJack(int playerNum):numberOfPlayer(playerNum)
 BlackJack::~BlackJack()
 {
 	delete deck;
+	//delete hit;
+	//delete stand;
 	players.clear();
 	SDL_DestroyTexture(background);
+
 	
 	std::cout << "Black_Jack Cleaned" << std::endl;
 }
@@ -64,8 +84,7 @@ void BlackJack::reset()
 
 void BlackJack::render()
 {
-
-	SDL_RenderCopy(Game::renderer, background, NULL, NULL);
+	renderUI();
 
 	deck->render();
 
@@ -79,8 +98,6 @@ void BlackJack::render()
 void BlackJack::update()
 {
 	deck->update();
-
-	//std::cout << state << " " << std::endl;
 
 	switch (state)
 	{
@@ -117,7 +134,7 @@ void BlackJack::update()
 			}
 			else state = BlackJack::PlayerInterection;
 
-			if (players[indexPlayer]->state != Player::None)
+			if (players[indexPlayer]->state != Player::None && indexPlayer<indexDiler)
 			{
 				players[indexPlayer]->isMyTurn = false;
 				players[indexPlayer+1]->isMyTurn = true;
@@ -151,49 +168,53 @@ void BlackJack::playerInteractiv()
 {
 	switch (Game::event.type)
 	{
+	case SDL_MOUSEBUTTONDOWN:
+		if (Game::event.button.clicks == SDL_BUTTON_LEFT) {
+			
+			if (click) {
+
+				
+				if (Game::enterMouseInRect(hit.rect))takeHit();
+				if (Game::enterMouseInRect(stand.rect))takeStand();
+
+				click = false;
+			}
+		}
+		break;
 	case SDL_KEYDOWN:
 		switch (Game::event.key.keysym.sym)
 		{
 		case SDLK_SPACE:
 			if (click) {
 
-				if (!deck->isEmpty() && players[indexPlayer]->state == Player::None && indexPlayer != indexDiler)
-				{
-					players[indexPlayer]->addCardtoHand(deck->moveTopCard());
-				}
-
-				//players[indexPlayer]->update();
+				takeHit();
 				click = false;
 			}
+			break;
 		case SDLK_r:
 			if (click) {
 
 				reset();
-				state = BlackJack::Start;
 				click = false;
 			}
+			break;
 		case SDLK_s:
 			if (click) {
 
-				do {
-					if (indexPlayer < players.size()) {
-
-						players[indexPlayer]->isMyTurn = false;
-						players[indexPlayer + 1]->isMyTurn = true;
-						indexPlayer++;
-
-					}
-				} while (players[indexPlayer]->state == Player::Win);
-
-				std::cout << indexPlayer << std::endl;
+				takeStand();
 
 				click = false;
 
 			}
-		default:
-			std::cout << "Now Player #" << indexPlayer + 1 << std::endl;
 			break;
 		}
+		break;
+	case SDL_MOUSEBUTTONUP:
+		if (Game::event.button.clicks == SDL_BUTTON_LEFT) {
+			state = BlackJack::Animation;
+			click = true;
+		}
+	break;
 	case SDL_KEYUP:
 	{
 		switch (Game::event.key.keysym.sym)
@@ -209,14 +230,16 @@ void BlackJack::playerInteractiv()
 			break;
 		}
 	}
+
+	break;
 	}
 
 	if (indexPlayer == indexDiler)
 	{
 		players[indexDiler]->openCard();
 
-		while(players[indexPlayer]->getScore()<17)
-		players[indexPlayer]->addCardtoHand(deck->moveTopCard());
+		while (players[indexPlayer]->getScore() < 17)
+			players[indexPlayer]->addCardtoHand(deck->moveTopCard());
 		state = BlackJack::Animation;
 	}
 }
@@ -232,4 +255,35 @@ void BlackJack::WinLose()
 			else players[i]->state = Player::Win;
 		}
 	}
+}
+
+void BlackJack::renderUI()
+{
+	SDL_RenderCopy(Game::renderer, background, NULL, NULL);
+
+
+	TextureManager::Draw(hit.sprite,hit.rect);
+	TextureManager::Draw(stand.sprite, stand.rect);
+}
+
+void BlackJack::takeHit()
+{
+	if (!deck->isEmpty() && players[indexPlayer]->state == Player::None && indexPlayer != indexDiler)
+	{
+		players[indexPlayer]->addCardtoHand(deck->moveTopCard());
+	}
+
+}
+
+void BlackJack::takeStand()
+{
+	do {
+		if (indexPlayer < players.size() - 1) {
+
+			players[indexPlayer]->isMyTurn = false;
+			players[indexPlayer + 1]->isMyTurn = true;
+			indexPlayer++;
+
+		}
+	} while (players[indexPlayer]->state == Player::Win);
 }

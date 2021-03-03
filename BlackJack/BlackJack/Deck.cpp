@@ -118,3 +118,12 @@ void Deck::openCard()
 		cards[i]->isFace = true;
 	}
 }
+
+Vector2D Deck::getPos()
+{
+	Vector2D vec;
+	vec.x = xpos;
+	vec.y = ypos;
+
+	return vec;
+}

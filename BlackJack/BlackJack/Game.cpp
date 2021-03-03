@@ -60,6 +60,8 @@ Game::Game(const char* title, int xpos, int ypos, int width, int height, bool fu
 	{
 		text = TextManager::LoadText("Black Jack view");
 	}
+
+	
 }
 
 Game::~Game() 
@@ -85,7 +87,6 @@ void Game::handleEvents()
 		case SDL_QUIT:
 			isRunning = false;
 			break;
-
 		default:
 			break;
 	}
@@ -134,4 +135,23 @@ void Game::render()
 
 
 	SDL_RenderPresent(renderer);
+}
+
+bool Game::enterMouseInRect(SDL_Rect& rect)
+{
+	int x, y;
+	SDL_GetMouseState(&x, &y);
+
+	
+
+	x -= rect.x;
+	y -= rect.y;
+
+	if (x > 0 && x < rect.w
+		&& y > 0 && y < rect.h)
+	{
+		return true;
+	}
+
+	return false;
 }

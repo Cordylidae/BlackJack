@@ -22,6 +22,7 @@ public:
 	void render();
 
 	bool running() { return isRunning; }
+	static bool enterMouseInRect(SDL_Rect&);
 
 	static SDL_Renderer* renderer;
 	static SDL_Event event;
