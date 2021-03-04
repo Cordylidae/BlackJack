@@ -10,7 +10,8 @@ class Game
 private:
 	bool isRunning;
 	SDL_Window* window;
-	std::unique_ptr<BlackJack> blackJack;
+	//std::unique_ptr<BlackJack> blackJack;
+	BlackJack* blackJack;
 
 public:
 	Game(const char* title = "Black Jack", int xpos = SDL_WINDOWPOS_CENTERED, int ypos = SDL_WINDOWPOS_CENTERED, int width = 800, int height = 600, bool fullscreen = false);

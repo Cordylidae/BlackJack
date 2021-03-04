@@ -16,19 +16,22 @@ Card::Card(std::string namePath, int score_, double x, double y, bool isAce_)
 
 	now.x = x;
 	now.y = y;
+	
 
 	isFace = false;
 	isAnim = false;
 
 	textureCard = TextureManager::LoadImage(namePath);
-	textureBack = TextureManager::LoadImage("assets/Cards/Back.png");
+	if (SDL_RenderCopy(Game::renderer, textureCard, NULL, NULL) != 0)std::cout << SDL_GetError() << std::endl;
 
+	textureBack = TextureManager::LoadImage("assets/Cards/Back.png");
+	if (SDL_RenderCopy(Game::renderer, textureBack, NULL, NULL) != 0)std::cout << SDL_GetError() << std::endl;
+	
 }
 
 Card::~Card() 
 {
-	SDL_DestroyTexture(textureCard);
-	SDL_DestroyTexture(textureBack);
+
 }
 
 
@@ -43,25 +46,10 @@ void Card::update(double x, double y)
 		direction = finish - now;
 		direction /= speedAnim;
 
-		/*direction.x = int(direction.x);
-		direction.y = int(direction.y);*/
-
-		/*std::cout << direction.x<<" " << direction.y << std::endl;
-
-		std::cout << now.x << " " << now.y << std::endl;
-		std::cout << finish.x << " " << finish.y << std::endl << std::endl;*/
 
 	}
 	else animation();
 	
-	/*finish.x = x;
-	finish.y = y;
-
-	std::cout << now.x << " " << now.y << std::endl;
-	std::cout << finish.x << " " << finish.y << std::endl << std::endl;
-
-	now.x = x;
-	now.y = y;*/
 }
 
 void Card::animation()
@@ -78,7 +66,6 @@ void Card::render()
 
 	dect.x = now.x;
 	dect.y = now.y;
-
 
 	if(isFace)TextureManager::Draw(textureCard, dect);
 	else TextureManager::Draw(textureBack, dect);

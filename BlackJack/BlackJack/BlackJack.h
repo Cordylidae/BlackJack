@@ -3,11 +3,12 @@
 
 #include"Diler.h"
 
-
 struct UI
 {
 	SDL_Texture* sprite;
 	SDL_Rect rect;
+	SDL_Rect src;
+
 };
 
 
@@ -18,15 +19,19 @@ private:
 	enum State {Start, Animation, PlayerInterection, End} state;
 	//int countOfPlayer;
 
-	UI hit, stand;
+	UI hit, stand, sound;
 	SDL_Texture* background;
 	Deck* deck;
 	std::vector<std::shared_ptr<Player>> players; // 0 - index of Diler
+
+	Mix_Music* music;
+	bool musicOn;
 
 	int indexPlayer,indexDiler;
 	const int numberOfPlayer;
 	bool click;
 	
+
 
 public:
 	BlackJack(int playerNum = 3);

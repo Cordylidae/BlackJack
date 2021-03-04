@@ -10,8 +10,7 @@ Diler::Diler(double x, double y,int number):Player(x,y,number) {
 }
 
 Diler::~Diler() {
-	SDL_DestroyTexture(playerState);
-	SDL_DestroyTexture(playerText);
+	
 
 	std::cout << "Diler Hand Cleaned" << std::endl;
 }

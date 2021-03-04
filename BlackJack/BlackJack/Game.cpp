@@ -40,11 +40,18 @@ Game::Game(const char* title, int xpos, int ypos, int width, int height, bool fu
 		}
 
 
+
+
 		if (!TTF_Init())
 		{
 			std::cout << "Can make Text!" << std::endl;
 		}
 		else std::cout << "Problems with SDL_TTF\n";
+
+		if (!Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 2048)) {
+			std::cout << "Can make Sound!" << std::endl;
+		}
+		else std::cout << "Problems with Sound\n";
 
 		isRunning = true;
 	}
@@ -52,7 +59,10 @@ Game::Game(const char* title, int xpos, int ypos, int width, int height, bool fu
 		isRunning = false;
 	}
 
-	blackJack = std::make_unique<BlackJack>();
+
+
+	//blackJack = std::make_unique<BlackJack>();
+	blackJack = new BlackJack();
 
 	text = nullptr;
 
@@ -66,14 +76,15 @@ Game::Game(const char* title, int xpos, int ypos, int width, int height, bool fu
 
 Game::~Game() 
 {
-
-	SDL_DestroyTexture(text);
+	delete blackJack;
 
 	SDL_DestroyWindow(window);
 	SDL_DestroyRenderer(renderer);
 
+	Mix_Quit();
 	TTF_Quit();
 	SDL_Quit();
+
 
 	std::cout << "Game Cleaned" << std::endl;
 }
@@ -95,30 +106,6 @@ void Game::handleEvents()
 void Game::update() 
 {
 	blackJack->update();
-
-	/*Vector2D vec(Card.getComponent<TransformComponent>().position);
-
-	if (vec.x < 600 && vec.y <400)
-	{
-		Card.getComponent<TransformComponent>().position.Add(Vector2D(5, 0));
-		Card.getComponent<SpriteComponent>().setTex("assets/Cards/PikaKing.png");
-	}
-	else if (vec.x >= 600 && vec.y < 400)
-	{
-		Card.getComponent<TransformComponent>().position.Add(Vector2D(0, 5));
-		Card.getComponent<SpriteComponent>().setTex("assets/Cards/HeartKing.png");
-	}
-	else if (vec.x >= 0 && vec.y >= 400)
-	{
-		Card.getComponent<TransformComponent>().position.Add(Vector2D(-5, 0));
-		Card.getComponent<SpriteComponent>().setTex("assets/Cards/RubeKing.png");
-	}
-	else if (vec.x < 0 && vec.y >= 0)
-	{
-		Card.getComponent<TransformComponent>().position.Add(Vector2D(0, -5));
-		Card.getComponent<SpriteComponent>().setTex("assets/Cards/KrestKing.png");
-	}*/
-
 }
 
 void Game::render() 

@@ -7,15 +7,24 @@ BlackJack::BlackJack(int playerNum):numberOfPlayer(playerNum)
 
 	deck = new Deck();
 
-	background = TextureManager::LoadImage("assets/table.png");
-	stand.sprite = TextureManager::LoadImage("assets/stand.png");
-	hit.sprite = TextureManager::LoadImage("assets/hit.png");
+	
+
+	background = TextureManager::LoadImage("assets/UI/table.bmp");
+	stand.sprite = TextureManager::LoadImage("assets/UI/stand.bmp");
+	hit.sprite = TextureManager::LoadImage("assets/UI/hit.bmp");
+	sound.sprite = TextureManager::LoadImage("assets/UI/sound.bmp");
+
+	music = Mix_LoadMUS("assets/Music/main1.mp3");
+	musicOn = false;
+	Mix_PlayMusic(music,-1);
 
 	SDL_Rect rect;
 
 	SDL_QueryTexture(hit.sprite, NULL, NULL, &rect.w, &rect.h);
-	
-	
+	SDL_QueryTexture(sound.sprite, NULL, NULL,&sound.rect.w, &sound.rect.h);
+	sound.rect.x = 650; sound.rect.y = 500; sound.rect.w /= 2;
+	sound.src.x = sound.src.y = 0; sound.src.h = sound.rect.h; sound.src.w = sound.rect.w;
+
 	hit.rect.w = stand.rect.w = rect.w;
 	hit.rect.h = stand.rect.h = rect.h;
 
@@ -46,13 +55,15 @@ BlackJack::BlackJack(int playerNum):numberOfPlayer(playerNum)
 BlackJack::~BlackJack()
 {
 	delete deck;
-	//delete hit;
-	//delete stand;
+	
 	players.clear();
-	SDL_DestroyTexture(background);
-
 	
 	std::cout << "Black_Jack Cleaned" << std::endl;
+
+	
+	Mix_FreeMusic(music);
+	
+
 }
 
 
@@ -98,6 +109,7 @@ void BlackJack::render()
 void BlackJack::update()
 {
 	deck->update();
+	 
 
 	switch (state)
 	{
@@ -139,7 +151,6 @@ void BlackJack::update()
 				players[indexPlayer]->isMyTurn = false;
 				players[indexPlayer+1]->isMyTurn = true;
 				indexPlayer++;
-
 			}
 		}
 		
@@ -160,8 +171,12 @@ void BlackJack::update()
 		break;
 	}
 
-
-	
+	if (musicOn) {
+		Mix_ResumeMusic(); sound.src.x = 0;
+	}
+	else {
+		Mix_PauseMusic(); sound.src.x = sound.src.w;
+	}
 }
 
 void BlackJack::playerInteractiv()
@@ -176,6 +191,7 @@ void BlackJack::playerInteractiv()
 				
 				if (Game::enterMouseInRect(hit.rect))takeHit();
 				if (Game::enterMouseInRect(stand.rect))takeStand();
+				if (Game::enterMouseInRect(sound.rect))musicOn=!musicOn;
 
 				click = false;
 			}
@@ -264,6 +280,8 @@ void BlackJack::renderUI()
 
 	TextureManager::Draw(hit.sprite,hit.rect);
 	TextureManager::Draw(stand.sprite, stand.rect);
+	TextureManager::Draw(sound.sprite, sound.src, sound.rect);
+
 }
 
 void BlackJack::takeHit()

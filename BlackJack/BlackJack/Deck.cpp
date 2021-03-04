@@ -7,6 +7,7 @@ Deck::Deck(double x,double y):xpos(x),ypos(y)
 {
 	std::shared_ptr<Card> card;
 	
+
 	for (int i = 0; i < 4; i++) {
 		for (int j = 1; j < 14; j++)
 		{

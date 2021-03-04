@@ -1,28 +1,11 @@
 #include"TextureManager.h"
 
+image_cache image;
 
 SDL_Texture* TextureManager::LoadImage(std::string file)
 {
-	SDL_Surface* loadedImage = nullptr;
-	SDL_Texture* texture = nullptr;
-
-	loadedImage = SDL_LoadBMP(file.c_str());
-	if (loadedImage != nullptr) {
-		texture = SDL_CreateTextureFromSurface(Game::renderer, loadedImage);
-		SDL_FreeSurface(loadedImage);
-	}
-	else
-	{
-		loadedImage = IMG_Load(file.c_str());
-
-		if (loadedImage != nullptr)
-		{
-			texture = SDL_CreateTextureFromSurface(Game::renderer, loadedImage);
-			SDL_FreeSurface(loadedImage);
-		}
-		else std::cout << SDL_GetError() << std::endl;
-	}
-	return texture;
+	
+	return image.get_image(file);
 }
 
 void TextureManager::Draw(SDL_Texture* tex,SDL_Rect src,SDL_Rect dest) {
@@ -33,6 +16,7 @@ void TextureManager::Draw(SDL_Texture* tex, SDL_Rect dest) {
 	SDL_Rect pos;
 	pos.x = dest.x;
 	pos.y = dest.y;
+
 
 
 

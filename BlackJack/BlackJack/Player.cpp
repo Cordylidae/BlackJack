@@ -18,9 +18,6 @@ Player::~Player() {
 
 	cards.clear();
 
-	SDL_DestroyTexture(playerState);
-	SDL_DestroyTexture(playerText);
-
 	std::cout << "Player Hand Cleaned" << std::endl;
 }
 
@@ -96,15 +93,18 @@ void Player::drawTextOfPlayer()
 	pos.x = xpos;
 	pos.y = ypos - 30;
 
-	SDL_Color color = {255,255,255};
-	if (isMyTurn)color = { 0,255,0};
 
-	playerText = TextManager::LoadText("#Player " + std::to_string(index), 25, color);
+	playerText = TextManager::LoadText("#Player " + std::to_string(index));
+
+	SDL_SetTextureColorMod(playerText, 255, 255, 255);
+	if (isMyTurn)SDL_SetTextureColorMod(playerText, 0, 255, 0);
+
 	TextManager::Draw(playerText, pos);
 
 
 	pos.y = ypos + 88;
-	playerState = TextManager::LoadText(std::to_string(getScore()), 25, { 0,0,0 });
+	playerState = TextManager::LoadText(std::to_string(getScore()));
+	SDL_SetTextureColorMod(playerState, 0, 0, 0);
 	TextManager::Draw(playerState, pos);
 
 	pos.y = ypos;
