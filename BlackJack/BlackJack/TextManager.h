@@ -24,7 +24,7 @@ public:
         std::map<std::string, Value>::iterator i = cache_.find(text);
         if (i == cache_.end()) {
 
-            TTF_Font* sans = TTF_OpenFont("assets/Fonts/Bebas.ttf", size);
+            TTF_Font* sans = TTF_OpenFont("assets/Fonts/Blackjack.ttf", size);
 
             SDL_Surface* surf = TTF_RenderText_Solid(sans, text.c_str(), color);
             if (surf != nullptr) {

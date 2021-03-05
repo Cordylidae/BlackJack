@@ -1,51 +1,22 @@
 #include"BlackJack.h"
-#include"TextureManager.h"
+#include"TextManager.h"
 
 
 BlackJack::BlackJack(int playerNum):numberOfPlayer(playerNum)
 {
 
-	deck = new Deck();
 
+	numberOfText = 6;
+
+	startGame(); // initalize deck and players
+	makeUI(); // initalize UI
 	
+	indexStyleCard = 2;
+	indexStyleBack = 2;
 
-	background = TextureManager::LoadImage("assets/UI/table.bmp");
-	stand.sprite = TextureManager::LoadImage("assets/UI/stand.bmp");
-	hit.sprite = TextureManager::LoadImage("assets/UI/hit.bmp");
-	sound.sprite = TextureManager::LoadImage("assets/UI/sound.bmp");
-
-	music = Mix_LoadMUS("assets/Music/main1.mp3");
-	musicOn = false;
-	Mix_PlayMusic(music,-1);
-
-	SDL_Rect rect;
-
-	SDL_QueryTexture(hit.sprite, NULL, NULL, &rect.w, &rect.h);
-	SDL_QueryTexture(sound.sprite, NULL, NULL,&sound.rect.w, &sound.rect.h);
-	sound.rect.x = 650; sound.rect.y = 500; sound.rect.w /= 2;
-	sound.src.x = sound.src.y = 0; sound.src.h = sound.rect.h; sound.src.w = sound.rect.w;
-
-	hit.rect.w = stand.rect.w = rect.w;
-	hit.rect.h = stand.rect.h = rect.h;
-
-	hit.rect.x = deck->getPos().x - (hit.rect.w) / 4 * 3;
-	stand.rect.y = hit.rect.y = deck->getPos().y + 120;
-	stand.rect.x += hit.rect.x + hit.rect.w + 10;
-
-
-
-	std::shared_ptr<Player> player;
-
-	for (int i = 0; i < numberOfPlayer; i++) {
-		player = std::make_shared<Player>(50 + i * 200, 450,i+1);
-		players.push_back(player);
-	}
-
-	player = std::make_shared<Diler>(100, 100,indexDiler+1);
-	players.push_back(player);
-
-
+	optionOn = false;
 	state = BlackJack::Start;
+	
 	indexPlayer = 0;
 	indexDiler = players.size() - 1;
 	players[indexPlayer]->isMyTurn = true;
@@ -55,8 +26,8 @@ BlackJack::BlackJack(int playerNum):numberOfPlayer(playerNum)
 BlackJack::~BlackJack()
 {
 	delete deck;
-	
 	players.clear();
+	texts.clear();
 	
 	std::cout << "Black_Jack Cleaned" << std::endl;
 
@@ -72,30 +43,22 @@ void BlackJack::reset()
 	delete deck;
 	players.clear();
 
+	startGame();
 
-	std::shared_ptr<Player> player;
-
-	for (int i = 0; i < numberOfPlayer; i++) {
-		player = std::make_shared<Player>(50 + i * 200, 450,i+1);
-		players.push_back(player);
-	}
-
-	player = std::make_shared<Diler>(100, 100,indexDiler+1);
-	players.push_back(player);
-
-
-	deck = new Deck();
+	takeOption(indexStyleCard,false);
+	takeOption(indexStyleBack, true);
 
 	state = BlackJack::Start;
-
 	indexDiler = players.size() - 1;
 	indexPlayer = 0;
+
 	players[indexPlayer]->isMyTurn = true;
 }
 
 void BlackJack::render()
 {
-	renderUI();
+
+	renderUIBack();
 
 	deck->render();
 
@@ -103,8 +66,10 @@ void BlackJack::render()
 	{
 		players[i]->render();
 	}
-}
 
+	renderUIFront();
+
+}
 
 void BlackJack::update()
 {
@@ -167,6 +132,10 @@ void BlackJack::update()
 		reset();
 	}
 		break;
+	case BlackJack::Option:
+	{
+
+	}
 	default:
 		break;
 	}
@@ -179,6 +148,7 @@ void BlackJack::update()
 	}
 }
 
+
 void BlackJack::playerInteractiv()
 {
 	switch (Game::event.type)
@@ -188,10 +158,34 @@ void BlackJack::playerInteractiv()
 			
 			if (click) {
 
-				
-				if (Game::enterMouseInRect(hit.rect))takeHit();
-				if (Game::enterMouseInRect(stand.rect))takeStand();
-				if (Game::enterMouseInRect(sound.rect))musicOn=!musicOn;
+				if (!optionOn) {
+					if (Game::enterMouseInRect(hit.rect))takeHit();
+					if (Game::enterMouseInRect(stand.rect))takeStand();
+					if (Game::enterMouseInRect(option.rect))optionOn = true;
+					if (Game::enterMouseInRect(sound.rect))musicOn = !musicOn;
+				}
+				else
+				{
+					if (!Game::enterMouseInRect(optionUI.rect))optionOn = false;
+
+
+					if (Game::enterMouseInRect(texts[3]->rect)) {
+						takeOption(1,false);
+						indexStyleBack = 1;
+					}
+					if (Game::enterMouseInRect(texts[5]->rect)) {
+						takeOption(2, false);
+						indexStyleBack = 2;
+					}
+					if (Game::enterMouseInRect(texts[2]->rect)) {
+						takeOption(1, true);
+						indexStyleCard = 1;//index - number of style
+					}
+					if (Game::enterMouseInRect(texts[4]->rect)) {
+						takeOption(2, true);
+						indexStyleCard = 2;
+					}
+				}
 
 				click = false;
 			}
@@ -273,15 +267,49 @@ void BlackJack::WinLose()
 	}
 }
 
-void BlackJack::renderUI()
+void BlackJack::renderUIBack()
 {
 	SDL_RenderCopy(Game::renderer, background, NULL, NULL);
 
 
 	TextureManager::Draw(hit.sprite,hit.rect);
 	TextureManager::Draw(stand.sprite, stand.rect);
+	TextureManager::Draw(option.sprite, option.rect);
 	TextureManager::Draw(sound.sprite, sound.src, sound.rect);
 
+}
+
+void BlackJack::renderUIFront()
+{
+	if (optionOn)
+	{
+		
+		TextureManager::Draw(optionUI.sprite,optionUI.rect);
+		drawTextInOption();
+	}
+}
+
+void BlackJack::takeOption(int index_, bool isCard_)
+{
+	std::string namePath = "assets/Cards";
+	namePath += std::to_string(index_) + '/';
+
+
+	if (isCard_)
+	{
+		deck->swapTextureCard(namePath);
+
+		for (auto player : players)
+			player->swapTextureCard(namePath);
+	}
+	else {
+
+		deck->swapTextureBack(namePath);
+
+		for (auto player : players)
+			player->swapTextureBack(namePath);
+	}
+	optionOn = false;
 }
 
 void BlackJack::takeHit()
@@ -304,4 +332,102 @@ void BlackJack::takeStand()
 
 		}
 	} while (players[indexPlayer]->state == Player::Win);
+}
+
+
+void BlackJack::startGame()
+{
+	std::shared_ptr<Player> player;
+	std::shared_ptr<UI> ui;
+
+	for (int i = 0; i < numberOfText; i++)
+	{
+		ui = std::make_shared<UI>();
+		texts.push_back(ui);
+	}
+
+	for (int i = 0; i < numberOfPlayer; i++) {
+		player = std::make_shared<Player>(50 + i * 200, 450, i + 1);
+		players.push_back(player);
+	}
+
+	player = std::make_shared<Diler>(300, 200, indexDiler + 1);
+	players.push_back(player);
+
+
+	deck = new Deck();
+}
+
+void BlackJack::makeUI()
+{
+	background = TextureManager::LoadImage("assets/UI/table.bmp");
+	stand.sprite = TextureManager::LoadImage("assets/UI/stand.bmp");
+	hit.sprite = TextureManager::LoadImage("assets/UI/hit.bmp");
+	option.sprite = TextureManager::LoadImage("assets/UI/option.bmp");
+	optionUI.sprite = TextureManager::LoadImage("assets/UI/optionUI.bmp");
+	sound.sprite = TextureManager::LoadImage("assets/UI/sound.bmp");
+
+	music = Mix_LoadMUS("assets/Music/main2.mp3");
+	musicOn = false;
+	Mix_PlayMusic(music, -1);
+
+	SDL_Rect rect;
+
+	SDL_QueryTexture(hit.sprite, NULL, NULL, &rect.w, &rect.h);
+	SDL_QueryTexture(sound.sprite, NULL, NULL, &sound.rect.w, &sound.rect.h);
+	option.rect.x = 10; option.rect.y = sound.rect.y = 30; sound.rect.w /= 2;
+	option.rect.h = sound.src.h = sound.rect.h;
+	option.rect.w = sound.src.w = sound.rect.w;
+	sound.rect.x = option.rect.x + option.rect.w + 10;
+	sound.src.x = sound.src.y = 0;
+
+	hit.rect.w = stand.rect.w = rect.w;
+	hit.rect.h = stand.rect.h = rect.h;
+
+	hit.rect.x = deck->getPos().x - (hit.rect.w) / 4 * 3;
+	stand.rect.y = hit.rect.y = deck->getPos().y + 120;
+	stand.rect.x += hit.rect.x + hit.rect.w + 10;
+
+
+	SDL_QueryTexture(optionUI.sprite,NULL,NULL,&optionUI.rect.w, &optionUI.rect.h);
+	optionUI.rect.x = optionUI.rect.y = 100;
+
+	texts[0]->sprite = TextManager::LoadText("Card", 40, { 255, 255, 255 });
+	texts[1]->sprite = TextManager::LoadText("Back", 40, { 255, 255, 255 });
+	texts[2]->sprite = TextManager::LoadText("Style n1", 28, { 255, 212, 0 });
+	texts[3]->sprite = TextManager::LoadText("Style n1", 28, { 255, 212, 0 });
+	texts[4]->sprite = TextManager::LoadText("Style n2", 28, { 255, 230, 110 });
+	texts[5]->sprite = TextManager::LoadText("Style n2", 28, { 255, 230, 110 });
+
+
+	for (int i = 0; i < texts.size(); i++)
+	{
+		SDL_QueryTexture(texts[i]->sprite, NULL, NULL, &texts[i]->rect.w, &texts[i]->rect.h);
+	}
+
+	texts[0]->rect.x = optionUI.rect.x + 30;
+	texts[0]->rect.y = optionUI.rect.y + 30;
+
+	texts[1]->rect.x = texts[0]->rect.x + texts[0]->rect.w + 30;
+	texts[1]->rect.y = optionUI.rect.y + 30;
+
+	texts[2]->rect.x = texts[0]->rect.x;
+	texts[2]->rect.y = texts[0]->rect.y + 70;
+
+	texts[3]->rect.x = texts[1]->rect.x;
+	texts[3]->rect.y = texts[1]->rect.y + 70;
+
+	texts[4]->rect.x = texts[2]->rect.x;
+	texts[4]->rect.y = texts[2]->rect.y + 35;
+
+	texts[5]->rect.x = texts[3]->rect.x;
+	texts[5]->rect.y = texts[3]->rect.y + 35;
+}
+
+void BlackJack::drawTextInOption()
+{
+	for (int i = 0; i < texts.size(); i++)
+	{
+		TextManager::Draw(texts[i]->sprite, texts[i]->rect);
+	}
 }

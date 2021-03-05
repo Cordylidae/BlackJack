@@ -94,7 +94,7 @@ void Player::drawTextOfPlayer()
 	pos.y = ypos - 30;
 
 
-	playerText = TextManager::LoadText("#Player " + std::to_string(index));
+	playerText = TextManager::LoadText("Player " + std::to_string(index));
 
 	SDL_SetTextureColorMod(playerText, 255, 255, 255);
 	if (isMyTurn)SDL_SetTextureColorMod(playerText, 0, 255, 0);
@@ -107,8 +107,7 @@ void Player::drawTextOfPlayer()
 	SDL_SetTextureColorMod(playerState, 0, 0, 0);
 	TextManager::Draw(playerState, pos);
 
-	pos.y = ypos;
-	SDL_QueryTexture(playerState, NULL, NULL, &pos.w, &pos.h);
+	pos.x += 44;
 
 	switch (state)
 	{
@@ -126,4 +125,13 @@ void Player::drawTextOfPlayer()
 		break;
 	}
 
+}
+
+void Player::swapTextureCard(std::string namePath)
+{
+	Deck::swapTextureCard(namePath);
+}
+void Player::swapTextureBack(std::string namePath)
+{
+	Deck::swapTextureBack(namePath);
 }

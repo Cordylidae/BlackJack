@@ -17,9 +17,6 @@ void TextureManager::Draw(SDL_Texture* tex, SDL_Rect dest) {
 	pos.x = dest.x;
 	pos.y = dest.y;
 
-
-
-
 	SDL_QueryTexture(tex, NULL, NULL, &pos.w, &pos.h);
 	SDL_RenderCopy(Game::renderer, tex, NULL, &pos);
 }

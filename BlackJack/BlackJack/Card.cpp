@@ -9,10 +9,13 @@
 //
 
 
-Card::Card(std::string namePath, int score_, double x, double y, bool isAce_)
+Card::Card(std::string name_, int score_, double x, double y, bool isAce_)
 	:score(score_),isAce(isAce_)
 {
 	speedAnim = 100;
+
+	namePath = "assets/Cards2/";
+	name = name_;
 
 	now.x = x;
 	now.y = y;
@@ -21,12 +24,9 @@ Card::Card(std::string namePath, int score_, double x, double y, bool isAce_)
 	isFace = false;
 	isAnim = false;
 
-	textureCard = TextureManager::LoadImage(namePath);
-	if (SDL_RenderCopy(Game::renderer, textureCard, NULL, NULL) != 0)std::cout << SDL_GetError() << std::endl;
 
-	textureBack = TextureManager::LoadImage("assets/Cards/Back.png");
-	if (SDL_RenderCopy(Game::renderer, textureBack, NULL, NULL) != 0)std::cout << SDL_GetError() << std::endl;
-	
+	swapTextureCard(namePath);
+	swapTextureBack(namePath);
 }
 
 Card::~Card() 
@@ -67,7 +67,8 @@ void Card::render()
 	dect.x = now.x;
 	dect.y = now.y;
 
-	if(isFace)TextureManager::Draw(textureCard, dect);
+
+	if(isFace)TextureManager::Draw(textureCard,dect);
 	else TextureManager::Draw(textureBack, dect);
 }
 
@@ -79,4 +80,16 @@ SDL_Rect Card::sizeOfCard()
 	SDL_QueryTexture(textureCard, NULL, NULL, &rect.w, &rect.w);
 
 	return rect;
+}
+
+void Card::swapTextureCard(std::string namePath_)
+{
+	textureCard = TextureManager::LoadImage(namePath_ + name);
+	if (SDL_RenderCopy(Game::renderer, textureCard, NULL, NULL) != 0)std::cout << SDL_GetError() << std::endl;
+}
+
+void Card::swapTextureBack(std::string namePath_)
+{
+	textureBack = TextureManager::LoadImage(namePath_ + "Back.png");
+	if (SDL_RenderCopy(Game::renderer, textureBack, NULL, NULL) != 0)std::cout << SDL_GetError() << std::endl;
 }

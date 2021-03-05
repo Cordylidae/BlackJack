@@ -24,6 +24,8 @@ private:
 	bool isAce;
 	bool isAnim;
 	int score;
+	std::string namePath;
+	std::string name;
 
 	Vector2D now,finish,direction;
 	double speedAnim;
@@ -41,6 +43,9 @@ public:
 	int getScore() { return score; }
 	bool getIsAce() { return isAce; }
 	bool getIsAnimation() { return isAnim; }
+
+	void swapTextureCard(std::string namePath);
+	void swapTextureBack(std::string namePath);
 
 	SDL_Rect sizeOfCard();
 

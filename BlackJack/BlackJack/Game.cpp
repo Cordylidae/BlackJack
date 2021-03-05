@@ -62,7 +62,7 @@ Game::Game(const char* title, int xpos, int ypos, int width, int height, bool fu
 
 
 	//blackJack = std::make_unique<BlackJack>();
-	blackJack = new BlackJack();
+	blackJack = new BlackJack(4);
 
 	text = nullptr;
 

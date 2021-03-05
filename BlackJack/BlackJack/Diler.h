@@ -17,4 +17,7 @@ public:
 	void addCardtoHand(std::shared_ptr<Card> card, bool face = true) override;
 	int getScore() override;
 	void drawTextOfPlayer() override;
+
+	void swapTextureCard(std::string namePath) override;
+	void swapTextureBack(std::string namePath) override;
 };

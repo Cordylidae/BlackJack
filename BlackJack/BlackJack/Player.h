@@ -27,4 +27,6 @@ public:
 	virtual void drawTextOfPlayer();
 	virtual int getScore();
 	
+	void swapTextureCard(std::string namePath) override;
+	void swapTextureBack(std::string namePath) override;
 };

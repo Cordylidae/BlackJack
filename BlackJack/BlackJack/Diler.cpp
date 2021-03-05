@@ -3,7 +3,7 @@
 
 Diler::Diler(double x, double y,int number):Player(x,y,number) {
 
-	playerText = TextManager::LoadText("#Diler", 25, {0,0,0});
+	playerText = TextManager::LoadText("Diler", 25, {0,0,0});
 	playerState = nullptr;
 
 	firstCard = true;
@@ -87,8 +87,7 @@ void Diler::drawTextOfPlayer()
 	playerState = TextManager::LoadText(std::to_string(getScore()), 25, { 0,0,0 });
 	TextManager::Draw(playerState, pos);
 
-	pos.y = ypos;
-	SDL_QueryTexture(playerState, NULL, NULL, &pos.w, &pos.h);
+	pos.x += 44;
 
 	switch (state)
 	{
@@ -106,4 +105,14 @@ void Diler::drawTextOfPlayer()
 		break;
 	}
 
+}
+
+
+void Diler::swapTextureCard(std::string namePath)
+{
+	Player::swapTextureCard(namePath);
+}
+void Diler::swapTextureBack(std::string namePath)
+{
+	Player::swapTextureBack(namePath);
 }

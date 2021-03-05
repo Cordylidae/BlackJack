@@ -11,21 +11,21 @@ Deck::Deck(double x,double y):xpos(x),ypos(y)
 	for (int i = 0; i < 4; i++) {
 		for (int j = 1; j < 14; j++)
 		{
-			std::string path = "assets/Cards/"; int score = 10; bool isAce = false;
+			std::string part = ""; int score = 10; bool isAce = false;
 
 			switch (i)
 			{
 			case 0:
-				path += "Heart";
+				part += "Heart";
 				break;
 			case 1:
-				path += "Pika";
+				part += "Pika";
 				break;
 			case 2:
-				path += "Krest";
+				part += "Krest";
 				break;
 			case 3:
-				path += "Rube";
+				part += "Rube";
 				break;
 			}
 
@@ -33,33 +33,33 @@ Deck::Deck(double x,double y):xpos(x),ypos(y)
 			{
 			case 1:
 			{
-				path += "Ace";
+				part += "Ace";
 				score += 1;
 				isAce = true;
 			}
 				break;
 			case 10:
-				path += "10";
+				part += "10";
 				break;
 			case 11:
-				path += "Jack";
+				part += "Jack";
 				break;
 			case 12:
-				path += "Queen";
+				part += "Queen";
 				break;
 			case 13:
-				path += "King";
+				part += "King";
 				break;
 			default:
 			{
 				char digit = j + '0';
-				path += digit;
+				part += digit;
 				score = j;
 			}
 				break;
 			}
 
-			card = std::make_shared<Card>(path + ".png",score, sin(SDL_GetTicks())*5.0 + xpos, cos(SDL_GetTicks())*5.0 + ypos, isAce);
+			card = std::make_shared<Card>(part + ".png",score, sin(SDL_GetTicks())*5.0 + xpos, cos(SDL_GetTicks())*5.0 + ypos, isAce);
 			cards.push_back(card);
 		}
 
@@ -127,4 +127,19 @@ Vector2D Deck::getPos()
 	vec.y = ypos;
 
 	return vec;
+}
+
+void Deck::swapTextureCard(std::string namePath)
+{
+	for (auto c : cards)
+	{
+		c->swapTextureCard(namePath);
+	}
+}
+void Deck::swapTextureBack(std::string namePath)
+{
+	for (auto c : cards)
+	{
+		c->swapTextureBack(namePath);
+	}
 }

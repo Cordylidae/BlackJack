@@ -23,6 +23,10 @@ public:
 	std::shared_ptr<Card> moveTopCard();
 
 	virtual bool animationFinish();
+	
+	virtual void swapTextureCard(std::string namePath);
+	virtual void swapTextureBack(std::string namePath);
+
 	void openCard();
 	Vector2D getPos();
 };
