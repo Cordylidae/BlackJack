@@ -9,6 +9,8 @@ class Game
 {
 private:
 	bool isRunning;
+	bool fullscreen;
+	bool click;
 	SDL_Window* window;
 	//std::unique_ptr<BlackJack> blackJack;
 	BlackJack* blackJack;
@@ -27,7 +29,9 @@ public:
 
 	static SDL_Renderer* renderer;
 	static SDL_Event event;
-	//static Manager* manager;
+
+	void setScreen();
+	void setClose();
 };
 
 #endif // GAME_H

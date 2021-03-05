@@ -1,7 +1,6 @@
 #include"BlackJack.h"
 #include"TextManager.h"
 
-
 BlackJack::BlackJack(int playerNum):numberOfPlayer(playerNum)
 {
 
@@ -11,10 +10,7 @@ BlackJack::BlackJack(int playerNum):numberOfPlayer(playerNum)
 	startGame(); // initalize deck and players
 	makeUI(); // initalize UI
 	
-	indexStyleCard = 2;
-	indexStyleBack = 2;
-
-	optionOn = false;
+	
 	state = BlackJack::Start;
 	
 	indexPlayer = 0;
@@ -45,8 +41,8 @@ void BlackJack::reset()
 
 	startGame();
 
-	takeOption(indexStyleCard,false);
-	takeOption(indexStyleBack, true);
+	takeOption(indexStyleCard, true);
+	takeOption(indexStyleBack,  false);
 
 	state = BlackJack::Start;
 	indexDiler = players.size() - 1;
@@ -163,6 +159,7 @@ void BlackJack::playerInteractiv()
 					if (Game::enterMouseInRect(stand.rect))takeStand();
 					if (Game::enterMouseInRect(option.rect))optionOn = true;
 					if (Game::enterMouseInRect(sound.rect))musicOn = !musicOn;
+					if (Game::enterMouseInRect(close.rect))closeOff = true;
 				}
 				else
 				{
@@ -275,8 +272,8 @@ void BlackJack::renderUIBack()
 	TextureManager::Draw(hit.sprite,hit.rect);
 	TextureManager::Draw(stand.sprite, stand.rect);
 	TextureManager::Draw(option.sprite, option.rect);
+	TextureManager::Draw(close.sprite, close.rect);
 	TextureManager::Draw(sound.sprite, sound.src, sound.rect);
-
 }
 
 void BlackJack::renderUIFront()
@@ -366,10 +363,17 @@ void BlackJack::makeUI()
 	option.sprite = TextureManager::LoadImage("assets/UI/option.bmp");
 	optionUI.sprite = TextureManager::LoadImage("assets/UI/optionUI.bmp");
 	sound.sprite = TextureManager::LoadImage("assets/UI/sound.bmp");
+	close.sprite = TextureManager::LoadImage("assets/UI/close.bmp");
 
 	music = Mix_LoadMUS("assets/Music/main2.mp3");
 	musicOn = false;
 	Mix_PlayMusic(music, -1);
+
+	indexStyleCard = 2;
+	indexStyleBack = 2;
+
+	optionOn = false;
+	closeOff = false;
 
 	SDL_Rect rect;
 
@@ -378,9 +382,12 @@ void BlackJack::makeUI()
 	option.rect.x = 10; option.rect.y = sound.rect.y = 30; sound.rect.w /= 2;
 	option.rect.h = sound.src.h = sound.rect.h;
 	option.rect.w = sound.src.w = sound.rect.w;
-	sound.rect.x = option.rect.x + option.rect.w + 10;
+	sound.rect.x = option.rect.x + option.rect.w;
 	sound.src.x = sound.src.y = 0;
 
+	close.rect = option.rect;
+	close.rect.y += option.rect.h;
+	
 	hit.rect.w = stand.rect.w = rect.w;
 	hit.rect.h = stand.rect.h = rect.h;
 
@@ -418,10 +425,10 @@ void BlackJack::makeUI()
 	texts[3]->rect.y = texts[1]->rect.y + 70;
 
 	texts[4]->rect.x = texts[2]->rect.x;
-	texts[4]->rect.y = texts[2]->rect.y + 35;
+	texts[4]->rect.y = texts[2]->rect.y + 45;
 
 	texts[5]->rect.x = texts[3]->rect.x;
-	texts[5]->rect.y = texts[3]->rect.y + 35;
+	texts[5]->rect.y = texts[3]->rect.y + 45;
 }
 
 void BlackJack::drawTextInOption()

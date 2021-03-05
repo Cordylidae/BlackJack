@@ -5,16 +5,16 @@
 
 SDL_Event Game::event;
 SDL_Renderer* Game::renderer = nullptr;
-//Manager Game::manager;
-
 SDL_Texture* text;
 
 
-Game::Game(const char* title, int xpos, int ypos, int width, int height, bool fullscreen)
+Game::Game(const char* title, int xpos, int ypos, int width, int height, bool fullscreen_)
 {
 
-
+	fullscreen = fullscreen_ = false;
+	click = true;
 	int flags = 0;
+
 	if (fullscreen)
 	{
 		flags = SDL_WINDOW_FULLSCREEN;
@@ -29,6 +29,7 @@ Game::Game(const char* title, int xpos, int ypos, int width, int height, bool fu
 		{
 			std::cout << "Window created!" << std::endl;
 		}
+		else std::cout << SDL_Error << std::endl;
 
 		
 
@@ -61,7 +62,6 @@ Game::Game(const char* title, int xpos, int ypos, int width, int height, bool fu
 
 
 
-	//blackJack = std::make_unique<BlackJack>();
 	blackJack = new BlackJack(4);
 
 	text = nullptr;
@@ -98,6 +98,19 @@ void Game::handleEvents()
 		case SDL_QUIT:
 			isRunning = false;
 			break;
+		case SDL_KEYDOWN:
+			if (event.key.keysym.sym == SDLK_ESCAPE && click)
+			{
+				setScreen();
+				click = false;
+			}
+			break;
+		case SDL_KEYUP:
+			if (event.key.keysym.sym == SDLK_ESCAPE)
+			{
+				click = true;
+			}
+			break;
 		default:
 			break;
 	}
@@ -106,6 +119,7 @@ void Game::handleEvents()
 void Game::update() 
 {
 	blackJack->update();
+	if (blackJack->closeOff)isRunning = false;
 }
 
 void Game::render() 
@@ -141,4 +155,16 @@ bool Game::enterMouseInRect(SDL_Rect& rect)
 	}
 
 	return false;
+}
+
+void Game::setScreen()
+{
+	fullscreen = !fullscreen;
+	int flags = 0;
+
+	if (fullscreen)
+	{
+		flags = SDL_WINDOW_FULLSCREEN;
+	}
+	SDL_SetWindowFullscreen(window, flags);
 }

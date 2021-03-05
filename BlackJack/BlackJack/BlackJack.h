@@ -19,7 +19,7 @@ private:
 	enum State {Start, Animation, PlayerInterection, End, Option} state;
 	//int countOfPlayer;
 
-	UI hit, stand, sound, option, optionUI;
+	UI hit, stand, sound, option, optionUI, close;
 	std::vector<std::shared_ptr<UI>> texts;
 
 	SDL_Texture* background;
@@ -35,8 +35,9 @@ private:
 	bool click;
 	bool optionOn;
 
-
 public:
+	bool closeOff;
+
 	BlackJack(int playerNum = 3);
 	~BlackJack();
 
