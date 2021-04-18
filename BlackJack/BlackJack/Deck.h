@@ -1,5 +1,4 @@
-#ifndef  DECK_H
-#define DECK_H
+#pragma once
 
 #include"Card.h"
 #include<vector>
@@ -30,5 +29,3 @@ public:
 	void openCard();
 	Vector2D getPos();
 };
-
-#endif // ! DECK_H

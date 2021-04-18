@@ -1,6 +1,4 @@
-#ifndef TEXTURE_MANAGER_H
-#define TEXTURE_MANAGER_H
-
+#pragma once
 #include"Game.h"
 #include<map>
 #include<utility>
@@ -47,6 +45,3 @@ public:
     }
     ~image_cache() { flush(); }
 };
-
-
-#endif

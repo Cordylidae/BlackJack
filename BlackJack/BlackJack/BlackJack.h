@@ -1,5 +1,4 @@
-#ifndef BlackJack_H
-#define BlackJack_H
+#pragma once
 
 #include"Diler.h"
 
@@ -63,6 +62,3 @@ public:
 	void startGame();
 	void makeUI();
 };
-
-
-#endif BlackJack_H

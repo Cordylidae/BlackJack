@@ -1,5 +1,4 @@
-#ifndef GAME_H
-#define GAME_H
+#pragma once
 
 #include<memory>
 #include"BlackJack.h"
@@ -33,5 +32,3 @@ public:
 	void setScreen();
 	void setClose();
 };
-
-#endif // GAME_H

@@ -1,5 +1,4 @@
-#ifndef CARD_H
-#define CARD_H
+#pragma once
 
 #include<iostream>
 #include<string>
@@ -10,12 +9,6 @@
 #include"SDL_audio.h"
 #include"Vector2d.h"
 
-enum groupLabes
-{
-	groupCards,
-	groupPlayers,
-	groupTable
-};
 
 class Card
 {
@@ -51,5 +44,3 @@ public:
 
 	bool isFace;
 };
-
-#endif

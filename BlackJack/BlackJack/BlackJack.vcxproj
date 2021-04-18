@@ -146,7 +146,6 @@
     <ClCompile Include="Card.cpp" />
     <ClCompile Include="Deck.cpp" />
     <ClCompile Include="Diler.cpp" />
-    <ClCompile Include="ECS.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -155,19 +154,13 @@
     <ClCompile Include="Vector2d.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Animation.h" />
     <ClInclude Include="BlackJack.h" />
     <ClInclude Include="Card.h" />
-    <ClInclude Include="Components.h" />
     <ClInclude Include="Deck.h" />
     <ClInclude Include="Diler.h" />
-    <ClInclude Include="ECS.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="KeyboardController.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="TextManager.h" />
-    <ClInclude Include="TransformComponent.h" />
-    <ClInclude Include="SpriteComponent.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Vector2d.h" />
   </ItemGroup>

@@ -1,6 +1,4 @@
-#ifndef VEC2D_H
-#define VEC2D_H
-
+#pragma once
 
 class Vector2D
 {
@@ -32,5 +30,3 @@ public:
 
 
 };
-
-#endif // !POS_COMP_H

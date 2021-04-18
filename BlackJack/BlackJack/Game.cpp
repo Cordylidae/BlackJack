@@ -1,7 +1,7 @@
 #include"TextManager.h"
 #include"Game.h"
 
-#include"Components.h"
+//#include"Components.h"
 
 SDL_Event Game::event;
 SDL_Renderer* Game::renderer = nullptr;
